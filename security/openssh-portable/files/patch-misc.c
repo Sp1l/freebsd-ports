@@ -9,9 +9,9 @@ Submitted upstream, no reaction.
 Submitted by:   delphij@
 [rewritten for 7.4 by bdrewery@]
 
---- misc.c.orig	2017-01-12 11:54:41.058558000 -0800
-+++ misc.c	2017-01-12 11:55:16.531356000 -0800
-@@ -56,6 +56,8 @@
+--- misc.c.orig	2017-10-02 19:34:26 UTC
++++ misc.c
+@@ -63,6 +63,8 @@
  #include <net/if.h>
  #endif
  
@@ -20,24 +20,31 @@ Submitted by:   delphij@
  #include "xmalloc.h"
  #include "misc.h"
  #include "log.h"
-@@ -1253,7 +1255,19 @@ forward_equals(const struct Forward *a, 
+@@ -1259,11 +1261,26 @@ forward_equals(const struct Forward *a, 
+ 	return 1;
+ }
+ 
++static int
++ipport_reserved(void)
++{
++#if __FreeBSD__
++	int old, ret;
++	size_t len = sizeof(old);
++
++	ret = sysctlbyname("net.inet.ip.portrange.reservedhigh",
++	    &old, &len, NULL, 0);
++	if (ret == 0)
++		return (old + 1);
++#endif
++	return (IPPORT_RESERVED);
++}
++
+ /* returns 1 if bind to specified port by specified user is permitted */
  int
  bind_permitted(int port, uid_t uid)
  {
 -	if (port < IPPORT_RESERVED && uid != 0)
-+	int ipport_reserved;
-+#ifdef __FreeBSD__
-+	size_t len_ipport_reserved = sizeof(ipport_reserved);
-+
-+	if (sysctlbyname("net.inet.ip.portrange.reservedhigh",
-+	    &ipport_reserved, &len_ipport_reserved, NULL, 0) != 0)
-+		ipport_reserved = IPPORT_RESERVED;
-+	else
-+		ipport_reserved++;
-+#else
-+	ipport_reserved = IPPORT_RESERVED;
-+#endif
-+	if (port < ipport_reserved && uid != 0)
++	if (port < ipport_reserved() && uid != 0)
  		return 0;
  	return 1;
  }

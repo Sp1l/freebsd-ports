@@ -1,5 +1,5 @@
 # Created by: dwcjr@inethouston.net
-# $FreeBSD$
+# $FreeBSD: head/security/openssh-portable/Makefile 452358 2017-10-18 17:19:26Z bdrewery $
 
 PORTNAME=	openssh
 DISTVERSION=	7.6p1
@@ -26,13 +26,13 @@ CONFIGURE_ARGS=		--prefix=${PREFIX} --with-md5-passwords \
 
 ETCOLD=			${PREFIX}/etc
 
-BROKEN_SSL_REASON_openssl-devel=	incomplete definition of type struct rsa_st
-BROKEN_SSL_REASON_libressl=		random crashes with 7.6 PR 223000
+BROKEN_SSL_REASON_openssl-devel=	incomplete definition of type struct rsa_st in openssl-devel
 
 OPTIONS_DEFINE=		PAM TCP_WRAPPERS LIBEDIT BSM \
 			HPN X509 KERB_GSSAPI \
-			OVERWRITE_BASE SCTP LDNS NONECIPHER
-OPTIONS_DEFAULT=	LIBEDIT PAM TCP_WRAPPERS LDNS
+			OVERWRITE_BASE SCTP LDNS NONECIPHER \
+			BLACKLISTD
+OPTIONS_DEFAULT=	LIBEDIT PAM TCP_WRAPPERS LDNS BLACKLISTD
 OPTIONS_RADIO=		KERBEROS
 OPTIONS_RADIO_KERBEROS=	MIT HEIMDAL HEIMDAL_BASE
 TCP_WRAPPERS_DESC=	tcp_wrappers support
@@ -47,6 +47,7 @@ HEIMDAL_DESC=		Heimdal Kerberos (security/heimdal)
 HEIMDAL_BASE_DESC=	Heimdal Kerberos (base)
 MIT_DESC=		MIT Kerberos (security/krb5)
 NONECIPHER_DESC=	NONE Cipher support
+BLACKLISTD_DESC=	FreeBSD blacklistd support
 
 OPTIONS_SUB=		yes
 
@@ -71,7 +72,7 @@ X509_PATCHFILES=	${PORTNAME}-7.6p1+x509-${X509_VERSION}.diff.gz:-p1:x509
 # See https://bugzilla.mindrot.org/show_bug.cgi?id=2016
 # and https://bugzilla.mindrot.org/show_bug.cgi?id=1604
 #SCTP_PATCHFILES=	${PORTNAME}-7.2_p1-sctp.patch.gz:-p1
-SCTP_BROKEN=		Does not apply to 7.6+
+SCTP_BROKEN=		sctp patch does not apply in 7.6+
 SCTP_CONFIGURE_WITH=	sctp
 SCTP_EXTRA_PATCHES+=	${FILESDIR}/extra-patch-sctp:-p1
 
@@ -84,6 +85,8 @@ TCP_WRAPPERS_CONFIGURE_WITH=	tcp-wrappers
 LIBEDIT_CONFIGURE_WITH=	libedit
 LIBEDIT_USES=		libedit
 BSM_CONFIGURE_ON=	--with-audit=bsm
+
+BLACKLISTD_EXTRA_PATCHES=	${FILESDIR}/extra-patch-blacklistd
 
 ETCDIR?=		${PREFIX}/etc/ssh
 
@@ -98,7 +101,7 @@ EXTRA_PATCHES:=		${EXTRA_PATCHES:N${TCP_WRAPPERS_EXTRA_PATCHES}}
 
 # Must add this patch before HPN due to conflicts
 .if ${PORT_OPTIONS:MKERB_GSSAPI}
-BROKEN=	No patch for 7.6 yet.
+BROKEN=	No GSSAPI patch for 7.6 yet.
 # Patch from:
 # http://sources.debian.net/data/main/o/openssh/1:7.4p1-5/debian/patches/gssapi.patch
 # which was originally based on 5.7 patch from
@@ -113,7 +116,7 @@ PATCHFILES+=	openssh-7.4p1-gsskex-all-20141021-debian-rh-20161228.patch.gz:-p1:g
 
 # http://www.psc.edu/index.php/hpn-ssh https://github.com/rapier1/hpn-ssh https://github.com/rapier1/openssh-portable
 .if ${PORT_OPTIONS:MHPN} || ${PORT_OPTIONS:MNONECIPHER}
-BROKEN=			Not yet updated for 7.6+ and disabled in base
+BROKEN=			HPN and NONECIPHER patches not yet updated for 7.6+
 PORTDOCS+=		HPN-README
 HPN_VERSION=		14v5
 HPN_DISTVERSION=	6.7p1

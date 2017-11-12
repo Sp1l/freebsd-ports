@@ -8,9 +8,9 @@ vs. default login class distinction is made correctly.
 
 PR:             37416
 
---- auth.c.orig	2010-08-12 11:33:01.000000000 -0600
-+++ auth.c	2010-09-14 16:14:12.000000000 -0600
-@@ -594,7 +594,7 @@
+--- auth.c.orig	2017-10-02 19:34:26 UTC
++++ auth.c
+@@ -606,7 +606,7 @@ getpwnamallow(const char *user)
  	if (!allowed_user(pw))
  		return (NULL);
  #ifdef HAVE_LOGIN_CAP

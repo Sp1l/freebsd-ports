@@ -1,6 +1,6 @@
---- configure.ac.orig	2017-04-08 02:15:16 UTC
+--- configure.ac.orig	2017-10-02 19:34:26 UTC
 +++ configure.ac
-@@ -1544,7 +1545,7 @@ AC_ARG_WITH([libedit],
+@@ -1554,7 +1554,7 @@ AC_ARG_WITH([libedit],
  			LIBEDIT=`$PKGCONFIG --libs libedit`
  			CPPFLAGS="$CPPFLAGS `$PKGCONFIG --cflags libedit`"
  		else

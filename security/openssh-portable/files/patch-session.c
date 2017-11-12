@@ -10,19 +10,19 @@ Reviewed by:    ache
 Sponsored by:   DARPA, NAI Labs
 
 
---- session.c	2013-03-14 19:22:37 UTC
+--- session.c.orig	2017-10-02 19:34:26 UTC
 +++ session.c
-@@ -985,6 +985,9 @@ do_setup_env(Session *s, const char *she
+@@ -966,6 +966,9 @@ do_setup_env(struct ssh *ssh, Session *s
  	struct passwd *pw = s->pw;
  #if !defined (HAVE_LOGIN_CAP) && !defined (HAVE_CYGWIN)
  	char *path = NULL;
 +#else
 +	extern char **environ;
-+	char **senv, **var;
++	char **senv, **var, *val;
  #endif
  
  	/* Initialize the environment. */
-@@ -1006,6 +1009,9 @@ do_setup_env(Session *s, const char *she
+@@ -987,6 +990,9 @@ do_setup_env(struct ssh *ssh, Session *s
  	}
  #endif
  
@@ -32,7 +32,7 @@ Sponsored by:   DARPA, NAI Labs
  #ifdef GSSAPI
  	/* Allow any GSSAPI methods that we've used to alter
  	 * the childs environment as they see fit
-@@ -1023,11 +1029,21 @@ do_setup_env(Session *s, const char *she
+@@ -1004,11 +1010,30 @@ do_setup_env(struct ssh *ssh, Session *s
  	child_set_env(&env, &envsize, "LOGIN", pw->pw_name);
  #endif
  	child_set_env(&env, &envsize, "HOME", pw->pw_dir);
@@ -45,20 +45,29 @@ Sponsored by:   DARPA, NAI Labs
 -		child_set_env(&env, &envsize, "PATH", getenv("PATH"));
 +	child_set_env(&env, &envsize, "PATH", _PATH_STDPATH);
 +	child_set_env(&env, &envsize, "TERM", "su");
++	/*
++	 * Temporarily swap out our real environment with an empty one,
++	 * let setusercontext() apply any environment variables defined
++	 * for the user's login class, copy those variables to the child,
++	 * free the temporary environment, and restore the original.
++	 */
 +	senv = environ;
-+	environ = xmalloc(sizeof(char *));
++	environ = xmalloc(sizeof(*environ));
 +	*environ = NULL;
-+	(void) setusercontext(lc, pw, pw->pw_uid,
-+	    LOGIN_SETENV|LOGIN_SETPATH);
-+	copy_environment(environ, &env, &envsize);
-+	for (var = environ; *var != NULL; ++var)
++	(void)setusercontext(lc, pw, pw->pw_uid, LOGIN_SETENV|LOGIN_SETPATH);
++	for (var = environ; *var != NULL; ++var) {
++		if ((val = strchr(*var, '=')) != NULL) {
++			*val++ = '\0';
++			child_set_env(&env, &envsize, *var, val);
++		}
 +		free(*var);
++	}
 +	free(environ);
 +	environ = senv;
  #else /* HAVE_LOGIN_CAP */
  # ifndef HAVE_CYGWIN
  	/*
-@@ -1047,15 +1063,9 @@ do_setup_env(Session *s, const char *she
+@@ -1028,15 +1053,9 @@ do_setup_env(struct ssh *ssh, Session *s
  # endif /* HAVE_CYGWIN */
  #endif /* HAVE_LOGIN_CAP */
  
@@ -74,7 +83,7 @@ Sponsored by:   DARPA, NAI Labs
  	/* Set custom environment options from RSA authentication. */
  	while (custom_environment) {
  		struct envstring *ce = custom_environment;
-@@ -1334,7 +1344,7 @@ do_setusercontext(struct passwd *pw)
+@@ -1321,7 +1340,7 @@ do_setusercontext(struct passwd *pw)
  	if (platform_privileged_uidswap()) {
  #ifdef HAVE_LOGIN_CAP
  		if (setusercontext(lc, pw, pw->pw_uid,
