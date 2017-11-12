@@ -106,6 +106,7 @@
     SUBDIR += antlr4
     SUBDIR += apache-ant
     SUBDIR += apache-rat
+    SUBDIR += aphpunit
     SUBDIR += api-sanity-autotest
     SUBDIR += apiextractor
     SUBDIR += appstream-glib
@@ -295,7 +296,6 @@
     SUBDIR += cl-alexandria-sbcl
     SUBDIR += cl-asdf
     SUBDIR += cl-cffi
-    SUBDIR += cl-cffi-sbcl
     SUBDIR += cl-infix
     SUBDIR += cl-infix-sbcl
     SUBDIR += cl-port
@@ -474,7 +474,6 @@
     SUBDIR += dulwich
     SUBDIR += duplo
     SUBDIR += dwarfdump
-    SUBDIR += dwarves
     SUBDIR += dxa65
     SUBDIR += dyncall
     SUBDIR += e00compr
@@ -1528,6 +1527,7 @@
     SUBDIR += libsigrokdecode
     SUBDIR += libsigscan
     SUBDIR += libsigsegv
+    SUBDIR += libsimdpp
     SUBDIR += libslang2
     SUBDIR += libsmdev
     SUBDIR += libsmpp34
@@ -2064,6 +2064,7 @@
     SUBDIR += p5-Class-Factory
     SUBDIR += p5-Class-Factory-Util
     SUBDIR += p5-Class-Field
+    SUBDIR += p5-Class-Fields
     SUBDIR += p5-Class-Forward
     SUBDIR += p5-Class-Generate
     SUBDIR += p5-Class-Gomor
@@ -2460,13 +2461,13 @@
     SUBDIR += p5-Exception-Class-TryCatch
     SUBDIR += p5-Exception-Handler
     SUBDIR += p5-Expect-Simple
+    SUBDIR += p5-ExportTo
     SUBDIR += p5-Exporter
     SUBDIR += p5-Exporter-Declare
     SUBDIR += p5-Exporter-Easy
     SUBDIR += p5-Exporter-Lite
     SUBDIR += p5-Exporter-Tidy
     SUBDIR += p5-Exporter-Tiny
-    SUBDIR += p5-ExportTo
     SUBDIR += p5-ExtUtils-AutoInstall
     SUBDIR += p5-ExtUtils-CBuilder
     SUBDIR += p5-ExtUtils-CChecker
@@ -3241,6 +3242,7 @@
     SUBDIR += p5-SDL
     SUBDIR += p5-SNMP-Persist
     SUBDIR += p5-SOAP-WSDL
+    SUBDIR += p5-SPOPS
     SUBDIR += p5-SSN-Validate
     SUBDIR += p5-SUPER
     SUBDIR += p5-SVN-ACL
@@ -3660,7 +3662,6 @@
     SUBDIR += p5-UNIVERSAL-ref
     SUBDIR += p5-UNIVERSAL-require
     SUBDIR += p5-UNIVERSAL-which
-    SUBDIR += p5-Util-Any
     SUBDIR += p5-UUID
     SUBDIR += p5-UUID-Random
     SUBDIR += p5-UUID-Random-Patch-UseMRS
@@ -3670,6 +3671,7 @@
     SUBDIR += p5-Unix-Statgrab
     SUBDIR += p5-Unix-Uptime
     SUBDIR += p5-User-Identity
+    SUBDIR += p5-Util-Any
     SUBDIR += p5-VCP-Dest-svk
     SUBDIR += p5-VCP-Source-cvsbk
     SUBDIR += p5-VCP-autrijus
@@ -3887,7 +3889,6 @@
     SUBDIR += pear-PHP_Timer
     SUBDIR += pear-PHP_TokenStream
     SUBDIR += pear-PHP_UML
-    SUBDIR += pear-PPW
     SUBDIR += pear-Pager
     SUBDIR += pear-PhpDocumentor
     SUBDIR += pear-Pirum
@@ -4065,7 +4066,6 @@
     SUBDIR += pig
     SUBDIR += pijul
     SUBDIR += piklab
-    SUBDIR += pinba_engine
     SUBDIR += pipestatus
     SUBDIR += pire
     SUBDIR += pit
@@ -4374,7 +4374,6 @@
     SUBDIR += py-epdb
     SUBDIR += py-epsilon
     SUBDIR += py-evdev
-    SUBDIR += py-event
     SUBDIR += py-exam
     SUBDIR += py-extras
     SUBDIR += py-extremes
@@ -4448,6 +4447,7 @@
     SUBDIR += py-grizzled
     SUBDIR += py-grouch
     SUBDIR += py-grpcio
+    SUBDIR += py-grpcio-tools
     SUBDIR += py-gtfslib
     SUBDIR += py-gyp
     SUBDIR += py-hash_ring
@@ -4503,6 +4503,7 @@
     SUBDIR += py-jsonpointer
     SUBDIR += py-jsonref
     SUBDIR += py-jsonrpclib
+    SUBDIR += py-jsonrpclib-pelix
     SUBDIR += py-jsonschema
     SUBDIR += py-jupyter_client
     SUBDIR += py-jupyter_console
@@ -5097,6 +5098,7 @@
     SUBDIR += py3-ply
     SUBDIR += py3-pretend
     SUBDIR += py3-prompt_toolkit
+    SUBDIR += py3-protobuf
     SUBDIR += py3-py
     SUBDIR += py3-pyasn1
     SUBDIR += py3-pycodestyle
@@ -5136,6 +5138,7 @@
     SUBDIR += py35-setuptools
     SUBDIR += py36-setuptools
     SUBDIR += py_static_check
+    SUBDIR += pybind11
     SUBDIR += pybugz
     SUBDIR += pycharm-ce
     SUBDIR += pychecker
@@ -5333,8 +5336,8 @@
     SUBDIR += rubygem-blockenspiel
     SUBDIR += rubygem-bones
     SUBDIR += rubygem-bootsnap
-    SUBDIR += rubygem-bosh-template
     SUBDIR += rubygem-bootstrap_form
+    SUBDIR += rubygem-bosh-template
     SUBDIR += rubygem-bosh_common
     SUBDIR += rubygem-bson
     SUBDIR += rubygem-buftok
