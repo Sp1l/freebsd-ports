@@ -1,0 +1,46 @@
+# $FreeBSD: head/www/apache25-devel/Makefile.modules 422343 2016-09-17 19:35:48Z ohauer $
+#
+.if defined(_PREMKINCLUDED)
+
+# check if APR-util module exists
+.if exists(${APU_CONFIG})
+.  if ${PORT_OPTIONS:MLDAP} || ${PORT_OPTIONS:MAUTHNZ_LDAP}
+.    if !exists(${APU_LDAP})
+IGNORE=	LDAP and AUTHNZ_LDAP requires APR-util to have LDAP support built in.\
+	Please rebuild APR with LDAP support
+.    endif
+.  endif
+
+.  if ${PORT_OPTIONS:MSESSION_CRYPTO}
+.    if !exists(${APU_CRYPTO_OPENSSL}) && !exists(${APU_CRYPTO_NSS})
+IGNORE=	SESSION_CRYPTO requires APR-util to have crypto support built in.\
+	Please rebuild APR with crypto support
+.    endif
+.  endif
+
+.endif	# exists APU_CONFIG
+
+.if defined(WITH_DEVMODS) && !defined(IAMADEVELOPER)
+IGNORE=		to build the develop/example modules specify -DIAMADEVELOPER on the command line.\
+		Do not use the this modules in production environment
+.endif
+
+# The next three params are not converted to an option,
+# they should be used only for special builds.
+.if defined(WITH_STATIC_SUPPORT)
+CONFIGURE_ARGS+=	--enable-static-support
+.endif
+
+# debug overrides CFLAGS
+.if defined(WITH_DEBUG)
+DEBUG_FLAGS?=	-O0 -g -ggdb3
+CFLAGS=		${DEBUG_FLAGS}
+CONFIGURE_ARGS+=	--enable-maintainer-mode
+WITH_EXCEPTION_HOOK=	yes
+.endif
+
+.if defined(WITH_EXCEPTION_HOOK)
+CONFIGURE_ARGS+=	--enable-exception-hook
+.endif
+
+.endif	# _PREMKINCLUDED
