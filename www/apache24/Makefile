@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: head/www/apache24/Makefile 452732 2017-10-23 18:49:27Z brnrd $
 
 PORTNAME=	apache24
 PORTVERSION=	2.4.29
@@ -42,12 +42,7 @@ SUB_LIST+=	MPMF="000_mpm_prefork_fallback.conf"
 USERS=		www
 GROUPS=		www
 
-# for slave ports
-.if !defined(MASTERDIR)
 APACHEDIR=	${.CURDIR}
-.else
-APACHEDIR=	${MASTERDIR}
-.endif
 
 WITH_HTTP_PORT?=	80
 WITH_SSL_PORT?=		443
@@ -56,58 +51,55 @@ WITH_SSL_PORT?=		443
 EXTRA_PATCHES+=	${FILESDIR}/extra-patch-server_buildmark.c
 .endif
 
-.include "${APACHEDIR}/Makefile.options"
-.include "${APACHEDIR}/Makefile.options.desc"
+.include "Makefile.options"
+.include "Makefile.options.desc"
+OPTIONS_SUB=	yes
 
 # IMPLIES
+AUTH_BASIC_IMPLIES=		AUTHN_CORE
+AUTH_DIGEST_IMPLIES=		AUTHN_CORE AUTHZ_CORE
 AUTHN_DBD_IMPLIES=		DBD
 HEARTBEAT_IMPLIES=		WATCHDOG STATUS
 HEARTMONITOR_IMPLIES=		WATCHDOG STATUS
 LBMETHOD_HEARTBEAT_IMPLIES=	WATCHDOG STATUS HEARTMONITOR
 PROXY_HCHECK_IMPLIES=		WATCHDOG
+PROXY_HTTP2_IMPLIES=		PROXY_BALANCER
 
-# MPM
+AUTHNZ_LDAP_USE=		openldap=yes
+BROTLI_CONFIGURE_WITH=		brotli=${LOCALBASE}
+BROTLI_LIB_DEPENDS=		libbrotlicommon.so:archivers/brotli
+HTTP2_CONFIGURE_WITH=		nghttp2=${LOCALBASE}
+HTTP2_LIB_DEPENDS=		libnghttp2.so:www/libnghttp2
+# http://httpd.apache.org/docs/2.4/bind.html
+IPV4_MAPPED_CONFIGURE_ENABLE=	v4-mapped
+LDAP_USE=			openldap=yes
+LUAJIT_LIB_DEPENDS=		libluajit-5.1.so:lang/luajit
+LUA_CONFIGURE_ENV=		LUA_CFLAGS="-I${LUA_INCDIR}" \
+				LUA_LIBS="-L${LUA_LIBDIR} -llua-${LUA_VER}"
+LUA_CONFIGURE_WITH=		lua=${PREFIX}
+LUA_USES=			lua
 MPM_PREFORK_CONFIGURE_ON=	--with-mpm=prefork
 MPM_WORKER_CONFIGURE_ON=	--with-mpm=worker
 MPM_EVENT_CONFIGURE_ON=		--with-mpm=event
-
-AUTHNZ_LDAP_CONFIGURE_ON=	--enable-authnz-ldap
-
-# http://httpd.apache.org/docs/2.4/bind.html
-IPV4_MAPPED_CONFIGURE_ENABLE=	v4-mapped
-
-LDAP_CONFIGURE_ON=		--enable-ldap=shared
-
-BROTLI_CONFIGURE_ON=		--with-brotli=${LOCALBASE}
-BROTLI_LIB_DEPENDS=		libbrotlicommon.so:archivers/brotli
-HTTP2_CONFIGURE_ON=		--with-nghttp2=${LOCALBASE}
-HTTP2_LIB_DEPENDS=		libnghttp2.so:www/libnghttp2
-LUAJIT_LIB_DEPENDS=		libluajit-5.1.so:lang/luajit
-LUA_CONFIGURE_WITH=		lua
-LUA_USES=			lua
-PROXY_HTTP2_CONFIGURE_ON=	--with-nghttp2=${LOCALBASE}
+MPM_SHARED_CONFIGURE_ON=	--enable-mpms-shared=all
+PROXY_HTML_USE=			gnnome=libxml2
+PROXY_HTML_WITH=		libxml2=${LOCALBASE}/include/libxml2
+PROXY_HTTP2_CONFIGURE_WITH=	nghttp2=${LOCALBASE}
 PROXY_HTTP2_LIB_DEPENDS=	libnghttp2.so:www/libnghttp2
-SOCACHE_DC_CONFIGURE_ON=	--with-distcache=${LOCALBASE}
+SOCACHE_DC_CONFIGURE_WITH=	distcache=${LOCALBASE}
 SOCACHE_DC_LIB_DEPENDS=		libdistcache.so:security/distcache
-
-# Note:
-# OpenSSL version (base/ports) depends how devel/apr1 was build
-#  apu-1-config --(includes|ldflags) and apr_rules.mk
-SSL_CFLAGS=			-I${OPENSSLINC}
-SSL_CONFIGURE_ON=		--with-ssl=${OPENSSLBASE}
-SSL_LDFLAGS=			-L${OPENSSLLIB}
+SSL_CONFIGURE_WITH=		ssl=${OPENSSLBASE}
 SSL_USES=			ssl
+XML2ENC_USE=			gnome=libxml2
+XML2ENC_WITH=			libxml2=${LOCALBASE}/include/libxml2
+.for mod in ${EXAMPLE_DISABLED_MODULES}
+${mod}_VARS=                    with-devmods=yes
+.endfor
 
-.include <bsd.port.options.mk>
 ETC_SUBDIRS=		Includes envvars.d extra modules.d
 
 APR_CONFIG?=		${LOCALBASE}/bin/apr-1-config
 APU_CONFIG?=		${LOCALBASE}/bin/apu-1-config
-
-# APU modules used by AUTHN_DBD DBD
-APU_DBD_MYSQL?=		${LOCALBASE}/lib/apr-util-1/apr_dbd_mysql.so
-APU_DBD_PGSQL?=		${LOCALBASE}/lib/apr-util-1/apr_dbd_pgsql.so
-APU_DBD_SQLITE3?=	${LOCALBASE}/lib/apr-util-1/apr_dbd_sqlite3.so
 # APU module used by AUTHNZ_LDAP LDAP
 APU_LDAP?=		${LOCALBASE}/lib/apr-util-1/apr_ldap.so
 # APU module used by SESSION_CRYPTO
@@ -134,21 +126,8 @@ MAKE_ENV+=	EXPR_COMPAT=yes \
 		INSTALL_MAN="${INSTALL_MAN}" \
 		DATADIR=${DATADIR}
 
-#=====================================================
-# CONFIGURE_ARGS will be handled in Makefile.modules,
-# here we do only OPTIONS fixups
-
-.if ${PORT_OPTIONS:MLUA}
-CONFIGURE_ENV+=	LUA_CFLAGS="-I${LUA_INCDIR}" \
-		LUA_LIBS="-L${LUA_LIBDIR} -llua-${LUA_VER}"
-.endif
-
-.if ${PORT_OPTIONS:MPROXY_HTML} || ${PORT_OPTIONS:MXML2ENC}
-USE_GNOME=	libxml2
-.endif
-
 .include <bsd.port.pre.mk>
-.include "${APACHEDIR}/Makefile.modules"
+.include "Makefile.modules"
 
 .if ${OPSYS} == FreeBSD && ${OSVERSION} < 1100085 &&\
 	${PORT_OPTIONS:MHTTP2} && ${OPENSSLBASE} == /usr

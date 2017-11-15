@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: head/www/apache24/Makefile.modules 452732 2017-10-23 18:49:27Z brnrd $
 #
 # =============================================
 # Maintainer note for OPTION handling:
@@ -28,23 +28,7 @@ IGNORE=	SESSION_CRYPTO requires APR-util to have crypto openssl support build in
 .endif	# exists APU_CONFIG
 
 # =============================================
-.if ${PORT_OPTIONS:MMPM_SHARED}
-SUB_LIST+=		MPM_FALLBACK_CHECK=""
-PLIST_SUB+=		MPM_SHARED=""
-CONFIGURE_ARGS+=	--enable-mpms-shared=all
-.else
-SUB_LIST+=		MPM_FALLBACK_CHECK="\#"
-PLIST_SUB+=		MPM_SHARED="@comment "
-.endif
-
-# =============================================
 # build develop/example modules only with additional confirmation
-.for DEVMOD in ${EXAMPLE_MODULES}
-.  if ${PORT_OPTIONS:M${DEVMOD}}
-WITH_DEVMODS=	yes
-.  endif
-.endfor
-
 .if defined(WITH_DEVMODS) && !defined(IAMADEVELOPER )
 IGNORE=		to build the develop/example modules specify -DIAMADEVELOPER on the command line.\
 		Do not use the this modules in production environment
@@ -66,28 +50,6 @@ WITH_EXCEPTION_HOOK=	yes
 
 .if defined(WITH_EXCEPTION_HOOK)
 CONFIGURE_ARGS+=	--enable-exception-hook
-.endif
-
-.if ${PORT_OPTIONS:MAUTH_BASIC} || ${PORT_OPTIONS:MAUTH_DIGEST}
-.  if !${APACHE_MODULES:MAUTHN*}
-IGNORE=	AUTH_BASIC and AUTH_DIGEST need at least one AUTHN provider
-.  endif
-.endif
-
-.if ${PORT_OPTIONS:MAUTH_BASIC}
-.  if !${APACHE_MODULES:MAUTHZ*}
-IGNORE=	AUTH_BASIC need at least one AUTHZ provider
-.  endif
-.endif
-
-.if ${PORT_OPTIONS:MXML2ENC} || ${PORT_OPTIONS:MPROXY_HTML}
-CONFIGURE_ARGS+=	--with-libxml2=${LOCALBASE}/include/libxml2
-.else
-CONFIGURE_ARGS+=	--without-libxml2
-.endif
-
-.if ${PORT_OPTIONS:MPROXY_HTTP2} && !${PORT_OPTIONS:MPROXY_BALANCER}
-IGNORE=	PROXY_HTTP2 requires PROXY_BALANCER
 .endif
 
 .endif	# _PREMKINCLUDED

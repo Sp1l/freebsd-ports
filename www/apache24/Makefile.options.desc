@@ -1,13 +1,19 @@
-# $FreeBSD$
+# $FreeBSD: head/www/apache24/Makefile.options.desc 452732 2017-10-23 18:49:27Z brnrd $
 
 # vim: syntax=make ts=8 noet
 # =====================================
-# OPTIONS HEADING
-PROXY_DESC=			Build enabled PROXY modules
-SESSION_DESC=			Build enabled SESSION modules
-DEFAULT_MPM_DESC=		The default MPM module
-SHARED_MPM_DESC=		Build all MPMs as shared Module
+AUTH_DESC=			Authentication and Authorization modules
+CACHEGR_DESC=			Cache modules (imply mod_cache)
 EXAMPLE_DESC=			Example and devel modules (do not use in prod)
+FILTERS_DESC=			Filter modules
+GENERATORS_DESC=		Modules generating content
+LOG_DESC=			Logging and debugging modules
+METADATA_DESC=			Modules operating on metadata
+MAPPERS_DESC=			Mapping modules (transform)
+NOCAT_DESC=			Uncatgegorized modules
+PROXYGR_DESC=			Proxy modules (imply mod_proxy) and options
+SECURITY_DESC=			Security related modules
+SESSIONGR_DESC=			Session modules (imply mod_session)
 
 # =====================================
 # MPMs
