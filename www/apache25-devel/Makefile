@@ -165,10 +165,12 @@ post-configure:
 	${REINPLACE_CMD} -e "s,%%PREFIX%%,${PREFIX}," ${WRKSRC}/support/envvars-std
 
 post-install:
-	@${RM} -rv ${STAGEDIR}/${WWWDIR}/cgi-bin/printenv.${vbs,wsf$} \
-		 ${STAGEDIR}${DOCSDIR}/style/${lang,xsl/util$}
+	@${RM} -rv ${STAGEDIR}/${WWWDIR}/cgi-bin/printenv.vbs \
+		${STAGEDIR}/${WWWDIR}/cgi-bin/printenv.wsf \
+		${STAGEDIR}${DOCSDIR}/style/lang ${STAGEDIR}${DOCSDIR}/style/xsl
 	@${MKDIR} ${ETC_SUBDIRS:S|^|${STAGEDIR}${ETCDIR}/|}
-	@${MV} ${STAGEDIR}${WWWDIR}/data ${STAGEDIR}${WWWDIR}/misc
+	${MV} ${STAGEDIR}${WWWDIR}/data ${STAGEDIR}${DATADIR}/misc
+	${MKDIR} ${STAGEDIR}${WWWDIR}/data
 	${INSTALL_DATA} ${FILESDIR}/no-accf.conf ${STAGEDIR}${ETCDIR}/Includes/
 # place for 3rd party module configuration
 	${INSTALL_DATA} ${FILESDIR}/README_modules.d ${STAGEDIR}${ETCDIR}/modules.d/
