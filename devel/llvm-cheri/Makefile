@@ -20,6 +20,7 @@ USES=		cmake:outsource compiler:c++11-lib libedit perl5 \
 		shebangfix
 USE_LDCONFIG=	${LLVM_PREFIX}/lib
 SHEBANG_FILES=	utils/lit/lit.py utils/llvm-lit/llvm-lit.in \
+		tools/clang/tools/scan-view/bin/scan-view \
 		tools/clang/tools/clang-format/git-clang-format \
 		tools/clang/tools/clang-format/clang-format-diff.py
 
@@ -31,7 +32,7 @@ SUB_LIST+=	STACK_ALIGN=${STACK_ALIGN}
 STACK_ALIGN?=	-mstack-alignment=32
 
 CMAKE_INSTALL_PREFIX=	${LLVM_PREFIX}
-CMAKE_ARGS+=	-DBUILD_SHARED_LIBS=ON \
+CMAKE_ARGS+=	-DLLVM_BUILD_LLVM_DYLIB=ON \
 		-DLLVM_DEFAULT_TARGET_TRIPLE=cheri-unknown-freebsd
 
 USE_GITHUB=	yes
@@ -45,7 +46,6 @@ OPTIONS_DEFAULT=	CLANG LIT LLD
 OPTIONS_SUB=	yes
 
 CLANG_DESC=	Build clang
-CLANG_EXTRA_PATCHES= ${PATCHDIR}/clang-patch-tools_clang_lib_Headers_CMakeLists.txt
 CLANG_GH_PROJECT=	clang:clang
 CLANG_GH_SUBDIR=	tools/clang:clang
 CLANG_GH_TAGNAME=	${CLANG_COMMIT}:clang
@@ -62,7 +62,8 @@ LLD_GH_SUBDIR=		tools/lld:lld
 LLD_GH_TAGNAME=		${LLD_COMMIT}:lld
 LLD_PORTDOCS=		lld
 LLDB_DESC=		Install lldb, the LLVM debugger (ignore on 9.x)
-LLDB_BUILD_DEPENDS=	swig:devel/swig13
+LLDB_BUILD_DEPENDS=	swig3.0:devel/swig30
+LLDB_BINARY_ALIAS=	swig=swig3.0
 LLDB_GH_PROJECT=	lldb:lldb
 LLDB_GH_TAGNAME=	${LLDB_COMMIT}:lldb
 
@@ -83,6 +84,7 @@ COMMANDS=	bugpoint \
 		llvm-as \
 		llvm-bcanalyzer \
 		llvm-cat \
+		llvm-cfi-verify \
 		llvm-config \
 		llvm-cov \
 		llvm-cvtres \
@@ -90,6 +92,7 @@ COMMANDS=	bugpoint \
 		llvm-cxx-filt \
 		llvm-diff \
 		llvm-dis \
+		llvm-dlltool \
 		llvm-dsymutil \
 		llvm-dwarfdump \
 		llvm-dwp \
@@ -100,12 +103,17 @@ COMMANDS=	bugpoint \
 		llvm-lto2 \
 		llvm-mc \
 		llvm-mcmarkup \
+		llvm-modextract \
+		llvm-mt \
 		llvm-nm \
+		llvm-objcopy \
 		llvm-objdump \
 		llvm-opt-report \
-		llvm-pdbdump \
+		llvm-pdbutil \
 		llvm-profdata \
 		llvm-ranlib \
+		llvm-rc \
+		llvm-readelf \
 		llvm-readobj \
 		llvm-rtdyld \
 		llvm-size \
@@ -138,6 +146,8 @@ COMMANDS+=	clang \
 		clang-check \
 		clang-cpp \
 		clang-format \
+		clang-refactor \
+		clang-rename \
 		scan-build \
 		scan-view
 MAN1SRCS+=	clang.1
@@ -146,12 +156,14 @@ DOCS_PLIST_FILES+=	man/man1/scan-build${LLVM_SUFFIX}.1.gz
 
 .if ${PORT_OPTIONS:MLIT}
 MAN1SRCS+=	lit.1 FileCheck.1
-_USES_PYTHON=	python
+_USES_PYTHON=	python:2.7
 LIT_COMMANDS=	lit llvm-lit FileCheck
 .endif
 
 .if ${PORT_OPTIONS:MLLD}
-COMMANDS+=	ld.lld
+COMMANDS+=	ld.lld \
+		ld64.lld \
+		wasm-ld
 .endif
 
 .if ${PORT_OPTIONS:MLLDB}
@@ -159,16 +171,17 @@ COMMANDS+=	argdumper \
 		lldb \
 		lldb-mi \
 		lldb-server
-_USES_PYTHON=	python
+_USES_PYTHON=	python:2.7
 .endif
 
-_USES_PYTHON?=	python:build
+_USES_PYTHON?=	python:2.7,build
 USES+=		${_USES_PYTHON}
 
-MAN1SRCS+=	bugpoint.1 llc.1 lli.1 llvm-ar.1 llvm-as.1 \
+MAN1SRCS+=	bugpoint.1 dsymutil.1 llc.1 lli.1 llvm-ar.1 llvm-as.1 \
 		llvm-bcanalyzer.1 llvm-build.1 llvm-config.1 llvm-cov.1 \
 		llvm-diff.1 llvm-dis.1 llvm-dwarfdump.1 \
 		llvm-extract.1 llvm-lib.1 llvm-link.1 llvm-nm.1 \
+		llvm-pdbutil.1 \
 		llvm-profdata.1 llvm-readobj.1 llvm-stress.1 llvm-symbolizer.1 \
 		opt.1 tblgen.1
 
@@ -281,7 +294,7 @@ build-plist:
 	    ${SORT} >> ${PLIST}.tmp
 	awk '{ \
 	    if ($$0 ~ /clang/ && $$0 !~ /omp.h/) {printf "%%%%CLANG%%%%"} \
-	    if ($$0 ~ /lld/ && $$0 !~ /lldb/) {printf "%%%%LLD%%%%"} \
+	    if ($$0 ~ /lld|wasm-ld/ && $$0 !~ /lldb/) {printf "%%%%LLD%%%%"} \
 	    if ($$0 ~ /(argdumper|lldb)/) {printf "%%%%LLDB%%%%"} \
 	    print \
 	}' \${PLIST}.tmp >> ${PLIST}

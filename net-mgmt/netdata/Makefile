@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	netdata
-PORTVERSION=	1.8.0
+PORTVERSION=	1.9.0
 DISTVERSIONPREFIX=v
 PORTREVISION=	1
 CATEGORIES=	net-mgmt
@@ -14,6 +14,8 @@ LICENSE=	GPLv3
 
 BUILD_DEPENDS=	${LOCALBASE}/include/uuid/uuid.h:misc/e2fsprogs-libuuid
 LIB_DEPENDS=	libuuid.so:misc/e2fsprogs-libuuid
+RUN_DEPENDS=	bash:shells/bash \
+		curl:ftp/curl
 
 USES=		autoreconf pathfix pkgconfig:both python shebangfix
 

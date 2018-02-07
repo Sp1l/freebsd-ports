@@ -1,6 +1,6 @@
---- perl.c.orig	2017-11-13 09:18:07 UTC
+--- perl.c.orig	2018-02-05 06:51:36 UTC
 +++ perl.c
-@@ -1925,23 +1925,7 @@ S_Internals_V(pTHX_ CV *cv)
+@@ -2033,23 +2033,7 @@ S_Internals_V(pTHX_ CV *cv)
      PUSHs(Perl_newSVpvn_flags(aTHX_ non_bincompat_options,
  			      sizeof(non_bincompat_options) - 1, SVs_TEMP));
  

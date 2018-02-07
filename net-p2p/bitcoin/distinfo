@@ -1,3 +1,5 @@
-TIMESTAMP = 1505631653
-SHA256 (bitcoin-bitcoin-v0.15.0.1_GH0.tar.gz) = a2d28632be6918ce23d2fd589f0aecbb2a90579c9345f47fdfe1e77ec31f023e
-SIZE (bitcoin-bitcoin-v0.15.0.1_GH0.tar.gz) = 7504139
+TIMESTAMP = 1510484103
+SHA256 (bitcoin-bitcoin-v0.15.1_GH0.tar.gz) = 98b3a98a67054123bef6714e4035e18f9250a1b6d63829258ad057906e75d8b1
+SIZE (bitcoin-bitcoin-v0.15.1_GH0.tar.gz) = 7547736
+SHA256 (1ec0c0a01c31.patch) = 01a2fe784d7c3d21d2cfd9dc460c059c7ae358e0f5e9e5e7782f10d259db3cd9
+SIZE (1ec0c0a01c31.patch) = 3535

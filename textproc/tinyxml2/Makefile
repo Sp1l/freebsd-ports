@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	tinyxml2
-PORTVERSION=	5.0.1
+PORTVERSION=	6.0.0
 PORTEPOCH=	1
 CATEGORIES=	textproc
 
@@ -22,6 +22,9 @@ PORTEXAMPLES=	*
 
 GH_ACCOUNT=	leethomason
 USE_GITHUB=	yes
+
+post-patch:
+	@${REINPLACE_CMD} -e '/CMAKE_DEBUG_POSTFIX/d' ${WRKSRC}/CMakeLists.txt
 
 post-install-EXAMPLES-on:
 	${MKDIR} ${STAGEDIR}${EXAMPLESDIR}/

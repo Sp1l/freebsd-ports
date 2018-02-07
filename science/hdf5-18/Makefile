@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	hdf5
-PORTVERSION=	1.8.19 # When PORTVERSION changes, please update french/med/files/patch-configure
-PORTREVISION=	2
+PORTVERSION=	1.8.20 # When PORTVERSION changes, please update french/med/files/patch-configure
 CATEGORIES=	science archivers graphics
 MASTER_SITES=	https://support.hdfgroup.org/ftp/HDF5/current18/src/	\
 		http://support.hdfgroup.org/ftp/HDF5/current18/src/	\
@@ -15,8 +14,6 @@ COMMENT=	Hierarchical Data Format library (from NCSA) 1.8
 
 LICENSE=	BSD4CLAUSE
 LICENSE_FILE=	${WRKSRC}/COPYING
-
-BROKEN_sparc64=		Does not compile on ${ARCH}
 
 OPTIONS_DEFINE=	DEBUG EXAMPLES FORTRAN SZIP
 

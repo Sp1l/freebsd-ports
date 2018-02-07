@@ -48,7 +48,6 @@
     SUBDIR += edict-fpw
     SUBDIR += edict-utf-8
     SUBDIR += edyvalue
-    SUBDIR += egg-canna
     SUBDIR += eijiro-fpw
     SUBDIR += epwutil
     SUBDIR += esecanna
@@ -170,7 +169,7 @@
     SUBDIR += mg
     SUBDIR += mh
     SUBDIR += migemo
-    SUBDIR += migemo-emacs23
+    SUBDIR += migemo-emacs
     SUBDIR += migemo.el
     SUBDIR += mime_pls
     SUBDIR += ming

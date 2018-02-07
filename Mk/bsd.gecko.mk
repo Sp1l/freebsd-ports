@@ -106,17 +106,18 @@ USE_XORG+=	xcb
 .endif
 
 .if ${MOZILLA_VER:R:R} >= 56
-MESA_LLVM_VER?=	40
+MESA_LLVM_VER?=	50
 BUILD_DEPENDS+=	llvm${MESA_LLVM_VER}>0:devel/llvm${MESA_LLVM_VER}
 MOZ_EXPORT+=	LLVM_CONFIG=llvm-config${MESA_LLVM_VER}
+.if ${MOZILLA_VER:R:R} < 58
 MOZ_EXPORT+=	BINDGEN_CFLAGS="${BINDGEN_CFLAGS}"
-# XXX bug 1341234
 . if ! ${USE_MOZILLA:M-nspr}
 BINDGEN_CFLAGS+=-isystem${LOCALBASE}/include/nspr
 . endif
 . if ! ${USE_MOZILLA:M-pixman}
 BINDGEN_CFLAGS+=-isystem${LOCALBASE}/include/pixman-1
 . endif
+.endif # MOZILLA_VER < 58
 .endif
 
 .if ${OPSYS} == FreeBSD && ${OSREL} == 11.1
@@ -125,7 +126,6 @@ LLD_UNSAFE=	yes
 
 MOZILLA_SUFX?=	none
 MOZSRC?=	${WRKSRC}
-WRKSRC?=	${WRKDIR}/mozilla
 PLISTF?=	${WRKDIR}/plist_files
 
 MOZ_OBJDIR?=	${WRKSRC}/obj-${ARCH:C/amd64/x86_64/}-unknown-${OPSYS:tl}${OSREL}
@@ -145,14 +145,23 @@ PKGDEINSTALL_INC?=	${.CURDIR}/../../www/firefox/files/pkg-deinstall.in
 MOZ_PKGCONFIG_FILES?=	${MOZILLA}-gtkmozembed ${MOZILLA}-js \
 			${MOZILLA}-xpcom ${MOZILLA}-plugin
 
+MAKE_ENV+=		MACH=1 # XXX bug 1412398
 ALL_TARGET?=	build
 
 MOZ_EXPORT+=	${CONFIGURE_ENV} \
+				RUSTFLAGS="${RUSTFLAGS}" \
 				PERL="${PERL}"
 MOZ_OPTIONS+=	--prefix="${PREFIX}"
 MOZ_MK_OPTIONS+=MOZ_OBJDIR="${MOZ_OBJDIR}"
 
 LDFLAGS+=		-Wl,--as-needed
+
+# Adjust -C target-cpu if -march/-mcpu is set by bsd.cpu.mk
+.if ${ARCH} == amd64 || ${ARCH} == i386
+RUSTFLAGS+=	${CFLAGS:M-march=*:S/-march=/-C target-cpu=/}
+.else
+RUSTFLAGS+=	${CFLAGS:M-mcpu=*:S/-mcpu=/-C target-cpu=/}
+.endif
 
 .if ${MOZILLA_VER:R:R} < 55 && ${OPSYS} == FreeBSD && ${OSVERSION} < 1200032
 # use jemalloc 3.0.0 (4.0 for firefox 43+) API for stats/tuning
@@ -304,6 +313,13 @@ MOZ_EXPORT+=	MOZ_OPTIMIZE_FLAGS="${CFLAGS:M-O*}"
 MOZ_OPTIONS+=	--enable-optimize
 .else
 MOZ_OPTIONS+=	--disable-optimize
+. if ${MOZILLA_VER:R:R} >= 56
+.  if ${/usr/bin/ld:L:tA} != /usr/bin/ld.lld
+# ld 2.17 barfs on Stylo built with -C opt-level=0
+USE_BINUTILS=	yes
+LDFLAGS+=		-B${LOCALBASE}/bin
+.  endif
+. endif
 .endif
 
 .if ${PORT_OPTIONS:MCANBERRA}
@@ -330,36 +346,17 @@ MOZ_OPTIONS+=	--disable-gstreamer
 .endif
 
 .if ${PORT_OPTIONS:MGCONF}
-BUILD_DEPENDS+=	${gconf2_DETECT}:${gconf2_LIB_DEPENDS:C/.*://}
-USE_GNOME+=		gconf2:build
+USE_GNOME+=		gconf2
 MOZ_OPTIONS+=	--enable-gconf
 .else
 MOZ_OPTIONS+=	--disable-gconf
 .endif
-
-.if ${MOZILLA_VER:R:R} < 55
-.if ${PORT_OPTIONS:MGNOMEUI}
-BUILD_DEPENDS+=	${libgnomeui_DETECT}:${libgnomeui_LIB_DEPENDS:C/.*://}
-USE_GNOME+=		libgnomeui:build
-MOZ_OPTIONS+=	--enable-gnomeui
-.else
-MOZ_OPTIONS+=	--disable-gnomeui
-.endif
-.endif # Mozilla < 55
 
 .if ${PORT_OPTIONS:MLIBPROXY}
 LIB_DEPENDS+=	libproxy.so:net/libproxy
 MOZ_OPTIONS+=	--enable-libproxy
 .else
 MOZ_OPTIONS+=	--disable-libproxy
-.endif
-
-.if ${PORT_OPTIONS:MPGO}
-USES:=		compiler:gcc-c++11-lib ${USES:Ncompiler*c++11*}
-USE_DISPLAY=yes
-
-ALL_TARGET=	profiledbuild
-MOZ_EXPORT+=MOZ_OPTIMIZE_FLAGS="-Os" MOZ_PGO_OPTIMIZE_FLAGS="${CFLAGS:M-O*}"
 .endif
 
 .if ${PORT_OPTIONS:MALSA}
@@ -395,12 +392,12 @@ post-patch-SNDIO-on:
 . endfor
 	@${REINPLACE_CMD} -e 's|OS==\"openbsd\"|OS==\"${OPSYS:tl}\"|g' \
 		${MOZSRC}/media/webrtc/trunk/webrtc/build/common.gypi
-	@${ECHO} "OS_LIBS += ['sndio']" >> \
+	@${ECHO_CMD} "OS_LIBS += ['sndio']" >> \
 		${MOZSRC}/media/webrtc/signaling/test/common.build
 .endif
 
 .if ${PORT_OPTIONS:MRUST} || ${MOZILLA_VER:R:R} >= 54
-BUILD_DEPENDS+=	${RUST_PORT:T}>=1.19.0_2:${RUST_PORT}
+BUILD_DEPENDS+=	${RUST_PORT:T}>=1.21.0:${RUST_PORT}
 RUST_PORT?=		lang/rust
 . if ${MOZILLA_VER:R:R} < 54
 MOZ_OPTIONS+=	--enable-rust
@@ -414,7 +411,7 @@ MOZ_OPTIONS+=	--enable-debug --disable-release
 STRIP=	# ports/184285
 .else
 MOZ_OPTIONS+=	--disable-debug --disable-debug-symbols --enable-release
-. if ${MOZILLA_VER:R:R} >= 56
+. if ${MOZILLA_VER:R:R} >= 56 && (${ARCH:Maarch64} || ${MACHINE_CPU:Msse2})
 MOZ_OPTIONS+=	--enable-rust-simd
 . endif
 .endif
@@ -426,7 +423,6 @@ MOZ_OPTIONS+=	--enable-dtrace \
 LIBS+=			-lelf
 . endif
 STRIP=
-LLD_UNSAFE=		yes
 .else
 MOZ_OPTIONS+=	--disable-dtrace
 .endif
@@ -500,22 +496,6 @@ MOZ_OPTIONS+=	--disable-v1-string-abi
 .endif
 
 .else # bsd.port.post.mk
-
-pre-extract: gecko-pre-extract
-
-gecko-pre-extract:
-.if ${PORT_OPTIONS:MPGO}
-	@${ECHO} "*****************************************************************"
-	@${ECHO} "**************************** attention **************************"
-	@${ECHO} "*****************************************************************"
-	@${ECHO} "To build ${MOZILLA} with PGO support you need a running X server and"
-	@${ECHO} "   build this port with an user who could access the X server!   "
-	@${ECHO} ""
-	@${ECHO} "During the build a ${MOZILLA} instance will start and run some test."
-	@${ECHO} "      Do not interrupt or close ${MOZILLA} during these tests!       "
-	@${ECHO} "*****************************************************************"
-	@sleep 10
-.endif
 
 post-patch: gecko-post-patch gecko-moz-pis-patch
 

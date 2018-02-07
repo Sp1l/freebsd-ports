@@ -2,6 +2,7 @@
 
 PORTNAME=	cadabra2
 DISTVERSION=	2.1.6
+PORTREVISION=	1
 CATEGORIES=	math
 
 MAINTAINER=	yuri@FreeBSD.org
@@ -19,8 +20,8 @@ LIB_DEPENDS=	libboost_python.so:devel/boost-python-libs \
 		libjsoncpp.so:devel/jsoncpp \
 		libgmp.so:math/gmp \
 		libuuid.so:misc/e2fsprogs-libuuid
-RUN_DEPENDS=	${PYTHON_SITELIBDIR}/sympy/__init__.py:math/py-sympy \
-		${PYTHON_SITELIBDIR}/matplotlib/__init__.py:math/py-matplotlib
+RUN_DEPENDS=	${PYTHON_SITELIBDIR}/sympy/__init__.py:math/py-sympy@${PY_FLAVOR} \
+		${PYTHON_SITELIBDIR}/matplotlib/__init__.py:math/py-matplotlib@${PY_FLAVOR}
 
 OPTIONS_DEFINE=	GUI
 OPTIONS_DEFAULT=GUI

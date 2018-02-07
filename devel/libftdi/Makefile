@@ -2,7 +2,7 @@
 
 PORTNAME=	libftdi
 PORTVERSION=	0.20
-PORTREVISION=	9
+PORTREVISION=	10
 CATEGORIES=	devel
 MASTER_SITES=	http://www.intra2net.com/en/developer/libftdi/download/
 
@@ -30,7 +30,7 @@ BOOST_CXXFLAGS=		-I${LOCALBASE}/include
 PYTHON_DESC=		Python bindings
 PYTHON_BUILD_DEPENDS=	swig3.0:devel/swig30
 PYTHON_CMAKE_BOOL=	PYTHON_BINDINGS
-PYTHON_USES=		python
+PYTHON_USES=		python:2.7
 
 BINARY_ALIAS=	swig=swig3.0
 

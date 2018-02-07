@@ -7,7 +7,7 @@
     SUBDIR += accrete
     SUBDIR += astrometry
     SUBDIR += boinc-astropulse
-    SUBDIR += boinc-setiathome-v7
+    SUBDIR += boinc-setiathome
     SUBDIR += celestia
     SUBDIR += celestia-gnome
     SUBDIR += celestia-gtk
@@ -84,7 +84,6 @@
     SUBDIR += py-astLib
     SUBDIR += py-astropy
     SUBDIR += py-horoscopegenerator
-    SUBDIR += py-pyfits
     SUBDIR += py-pymetar
     SUBDIR += py-pywapi
     SUBDIR += pyephem

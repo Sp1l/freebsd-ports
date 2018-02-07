@@ -7,7 +7,6 @@
     SUBDIR += avis
     SUBDIR += berkeley-db
     SUBDIR += bluej
-    SUBDIR += bootstrap-openjdk
     SUBDIR += bootstrap-openjdk6
     SUBDIR += bootstrap-openjdk8
     SUBDIR += bouncycastle
@@ -95,8 +94,8 @@
     SUBDIR += langspec
     SUBDIR += lightweight-java-profiler
     SUBDIR += linux-oracle-jdk18
-    SUBDIR += linux-oracle-jre18
     SUBDIR += linux-oracle-jdk9
+    SUBDIR += linux-oracle-jre18
     SUBDIR += linux-oracle-jre9
     SUBDIR += mmake
     SUBDIR += mx4j

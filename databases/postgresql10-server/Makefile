@@ -3,13 +3,14 @@
 
 DISTVERSION?=	10.1
 PKGNAMESUFFIX?= ${PORTVERSION:R}${COMPONENT}
-PORTREVISION?=	0
+PORTREVISION?=	1
 
 MAINTAINER?=	pgsql@FreeBSD.org
 
 INSTALL_DIRS?=	src/common src/timezone src/backend \
 		src/backend/utils/mb/conversion_procs \
 		src/backend/snowball src/backend/replication/libpqwalreceiver \
+		src/backend/replication/pgoutput \
 		src/bin/initdb src/bin/pg_ctl \
 		src/bin/pg_controldata src/bin/pg_resetwal src/pl \
 		src/bin/pg_basebackup src/bin/pg_archivecleanup \
@@ -20,11 +21,5 @@ INSTALL_DIRS?=	src/common src/timezone src/backend \
 PG_USER?=	postgres
 PG_GROUP?=	postgres
 PG_UID?=	770
-
-.if defined(SERVER_ONLY)
-CONFIGURE_ARGS+=--with-icu
-LIB_DEPENDS+=	libicudata.so:devel/icu
-USES+=		pkgconfig
-.endif
 
 .include "${.CURDIR}/../postgresql92-server/Makefile"

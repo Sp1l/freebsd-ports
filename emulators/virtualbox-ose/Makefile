@@ -2,8 +2,8 @@
 # $FreeBSD$
 
 PORTNAME=	virtualbox-ose
-PORTVERSION=	5.2.0
-PORTREVISION=	1
+PORTVERSION=	5.2.6
+PORTREVISION=	3
 CATEGORIES=	emulators
 MASTER_SITES=	http://download.virtualbox.org/virtualbox/${PORTVERSION}/
 DISTFILES=	VirtualBox-${PORTVERSION}${EXTRACT_SUFX} ${GUESTADDITIONS}
@@ -18,13 +18,11 @@ LICENSE_FILE=	${WRKSRC}/COPYING
 BUILD_DEPENDS=	yasm:devel/yasm \
 		xsltproc:textproc/libxslt \
 		kmk:devel/kBuild \
-		gtar:archivers/gtar \
-		cdrecord:sysutils/cdrtools
+		gtar:archivers/gtar
 LIB_DEPENDS=	libpng.so:graphics/png \
 		libxslt.so:textproc/libxslt \
 		libcurl.so:ftp/curl
-RUN_DEPENDS=	${LOCALBASE}/etc/rc.d/vboxnet:emulators/virtualbox-ose-kmod \
-		cdrecord:sysutils/cdrtools
+RUN_DEPENDS=	${LOCALBASE}/etc/rc.d/vboxnet:emulators/virtualbox-ose-kmod
 
 CPE_VENDOR=	oracle
 CPE_PRODUCT=	vm_virtualbox
@@ -149,7 +147,7 @@ USE_TEX=	dvipsk:build formats:build
 
 .if ${PORT_OPTIONS:MPYTHON}
 USES+=		python
-USE_PYTHON=	distutils noegginfo
+USE_PYTHON=	distutils noegginfo noflavors
 PYDISTUTILS_PKGNAME=	vboxapi
 PYDISTUTILS_PKGVERSION=	1.0
 .else
@@ -161,7 +159,7 @@ CONFIGURE_ARGS+=	--enable-qt5
 PLIST_SUB+=	QT=""
 QT_NONSTANDARD=	yes
 USE_GL=		gl
-USE_QT5=	buildtools_build core dbus gui linguist_build opengl
+USE_QT5=	buildtools_build core dbus gui linguisttools_build opengl
 USE_QT5+=	printsupport widgets x11extras
 USE_XORG=	xcb
 INSTALLS_ICONS=	yes

@@ -3,7 +3,7 @@
 
 PORTNAME=	spring
 PORTVERSION=	98.0
-PORTREVISION=	8
+PORTREVISION=	10
 CATEGORIES=	games
 MASTER_SITES=	SF/springrts/springrts/${PORTNAME}-${PORTVERSION} \
 		http://springrts.com/dl/
@@ -14,6 +14,7 @@ COMMENT=	Project aiming to create a new and versatile RTS Engine
 
 LICENSE=	GPLv2
 
+BROKEN=		fails to build with boost 1.66, see bug 224124
 BROKEN_FreeBSD_10=	fails to build with boost 1.65, see bug 220762
 
 LIB_DEPENDS=	libfreetype.so:print/freetype2 \
@@ -57,7 +58,7 @@ PORTDATA=	*
 
 OPTIONS_DEFINE=	MANPAGES PR_DOWNLOADER DOCS
 OPTIONS_DEFAULT=MANPAGES PR_DOWNLOADER
-OPTIONS_SUB=	*
+OPTIONS_SUB=	yes
 
 HTMLDOCS_DESC=	Build and install HTML documentation
 PR_DOWNLOADER_DESC=	Map and game downloader

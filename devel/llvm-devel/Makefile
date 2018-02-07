@@ -3,13 +3,12 @@
 
 PORTNAME=	llvm
 PORTVERSION=	${LLVM_MAJOR}.d${SNAPDATE}
+PORTREVISION=	0
 CATEGORIES=	devel lang
 PKGNAMESUFFIX=	-devel
 
 MAINTAINER=	brooks@FreeBSD.org
 COMMENT=	LLVM and Clang
-
-BROKEN_powerpc64=	Does not build: error: vsnprintf was not declared in this scope
 
 LLVM_SUFFIX=	-devel
 LLVM_PREFIX=	${PREFIX}/llvm${LLVM_SUFFIX}
@@ -19,7 +18,7 @@ DATADIR=	${PREFIX}/share/${PORTNAME}${LLVM_SUFFIX}
 USES=		cmake:outsource compiler:c++11-lib libedit perl5 \
 		shebangfix
 USE_LDCONFIG=	${LLVM_PREFIX}/lib
-_USES_PYTHON?=	python:build
+_USES_PYTHON?=	python:build:2.7
 USES+=		${_USES_PYTHON}
 SHEBANG_FILES=	utils/lit/lit.py utils/llvm-lit/llvm-lit.in \
 		tools/clang/tools/scan-view/bin/scan-view \
@@ -34,6 +33,7 @@ SUB_LIST=	LLVM_PREFIX="${LLVM_PREFIX}" LLVM_SUFFIX="${LLVM_SUFFIX}"
 
 CMAKE_INSTALL_PREFIX=	${LLVM_PREFIX}
 CMAKE_ARGS=	-DLLVM_BUILD_LLVM_DYLIB=ON
+CMAKE_ARGS+=	-DLLVM_ENABLE_RTTI=ON
 CMAKE_ARGS+=	-DLLVM_DEFAULT_TARGET_TRIPLE=${CONFIGURE_TARGET}
 CMAKE_ARGS+=	-DLLVM_HOST_TRIPLE=${CONFIGURE_TARGET}
 # Following commit https://github.com/kitware/cmake/commit/956054
@@ -53,7 +53,7 @@ OPTIONS_DEFINE_i386=	COMPILER_RT
 OPTIONS_DEFAULT=	CLANG EXTRAS LIT LLD LLDB
 OPTIONS_DEFAULT_amd64=	COMPILER_RT GOLD OPENMP
 OPTIONS_DEFAULT_i386=	COMPILER_RT
-OPTIONS_EXCLUDE_FreeBSD_10=	LLDB
+OPTIONS_EXCLUDE_FreeBSD_10=	LLDB OPENMP
 OPTIONS_SUB=	yes
 
 PLIST_FILES=
@@ -64,8 +64,7 @@ CLANG_EXTRA_PATCHES= \
 	${PATCHDIR}/clang-patch-fopenmp.diff \
 	${PATCHDIR}/clang-patch-tools_clang_tools_clang-format_clang-format.py \
 	${PATCHDIR}/clang-patch-tools_clang_tools_clang-format_clang-format-sublime.py \
-	${PATCHDIR}/clang-patch-tools_clang_tools_clang-format_git-clang-format \
-	${PATCHDIR}/clang-patch-tools_clang_lib_Headers_CMakeLists.txt
+	${PATCHDIR}/clang-patch-tools_clang_tools_clang-format_git-clang-format
 CLANG_CONFLICTS_INSTALL=	clang-devel-3.[1234567]*
 CLANG_GH_PROJECT=	clang:clang
 CLANG_GH_SUBDIR=	tools/clang:clang
@@ -99,7 +98,7 @@ LLDB_GH_PROJECT=	lldb:lldb
 LLDB_GH_SUBDIR=		tools/lldb:lldb
 LLDB_GH_TAGNAME=	${LLDB_COMMIT}:lldb
 LLDB_IMPLIES=		CLANG
-LLDB_VARS=		_USES_PYTHON=python
+LLDB_VARS=		_USES_PYTHON=python:2.7
 OPENMP_DESC=		Install libomp, the LLVM OpenMP runtime library
 OPENMP_CONFLICTS_INSTALL=	libiomp5-devel-*
 OPENMP_GH_PROJECT=	openmp:openmp
@@ -231,7 +230,7 @@ CLANG_PATTERN=	(c-index-test|clang|scan-|Reporter.py|ScanView.py|scanview.css|so
 .endif
 
 .if ${PORT_OPTIONS:MCOMPILER_RT}
-COMPILER_RT_PATTERN=	(asan_blacklist.txt|sanitizer|include.xray)
+COMPILER_RT_PATTERN=	(_blacklist.txt|sanitizer|include.xray)
 .endif
 
 .if ${PORT_OPTIONS:MLIT}
@@ -241,14 +240,16 @@ LIT_COMMANDS=	lit llvm-lit FileCheck
 
 .if ${PORT_OPTIONS:MLLD}
 COMMANDS+=	ld.lld \
-		ld64.lld
+		ld64.lld \
+		wasm-ld
 .endif
 
 .if ${PORT_OPTIONS:MLLDB}
 COMMANDS+=	lldb \
 		lldb-argdumper \
 		lldb-mi \
-		lldb-server
+		lldb-server \
+		lldb-test
 .endif
 
 .if ! ${OPTIONS_DEFINE:MCOMPILER_RT}
@@ -279,6 +280,10 @@ MAN1SRCS+=	bugpoint.1 dsymutil.1 llc.1 lli.1 llvm-ar.1 llvm-as.1 \
 
 .include <bsd.port.pre.mk>
 
+.if ${OPSYS} == FreeBSD && ${OSREL} == 10.3
+CFLAGS+=	-D_LIBCPP_TRIVIAL_PAIR_COPY_CTOR=1
+.endif
+
 .if defined(WITH_DEBUG)
 CMAKE_BUILD_TYPE=	RelWithDebInfo
 STRIP=
@@ -296,6 +301,8 @@ _COMPILER_RT_LIBS= \
 	libclang_rt.builtins-x86_64.a \
 	libclang_rt.dd-x86_64.a \
 	libclang_rt.dyndd-x86_64.so \
+	libclang_rt.fuzzer-x86_64.a \
+	libclang_rt.fuzzer_no_main-x86_64.a \
 	libclang_rt.lsan-x86_64.a \
 	libclang_rt.profile-x86_64.a \
 	libclang_rt.safestack-x86_64.a \
@@ -453,13 +460,13 @@ build-plist:
 	${FIND} ${STAGEDIR}${LLVM_PREFIX} -type f -o -type l | \
 	    ${GREP} -v '[/-]lit$$' | ${GREP} -v 'FileCheck$$' | \
 	    ${GREP} -v man/man1 | ${SED} -e 's|${STAGEDIR}${PREFIX}/||' \
+	    -e 's|${PYTHON_SITELIBDIR:C|${PREFIX}/||}|%%PYTHON_SITELIBDIR%%|' \
 	    -e 's|${PORTVERSION}|%%PORTVERSION%%|' \
 	    -e 's|release.cmake|%%CMAKE_BUILD_TYPE%%.cmake|' \
 	    -e 's|${LLVM_RELEASE:C/\./\\./g}|%%LLVM_RELEASE%%|' \
 	    -e 's|${LLVM_MAJOR:C/\./\\./}|%%LLVM_MAJOR%%|' \
 	    -e 's|\.${LLVM_MAJOR:C/\..*//}|.%%LLVM_LIB_VER%%|' \
-	    -e 's|${PYTHON_SITELIBDIR:C|${PREFIX}/||}|%%PYTHON_SITELIBDIR%%|' | \
-	    ${SORT} >> ${PLIST}.tmp
+	    | ${SORT} >> ${PLIST}.tmp
 	${FIND} ${STAGEDIR}${PYTHON_SITELIBDIR}/lit${LLVM_SUFFIX} -type f | \
 	    ${SED} -e 's|${STAGEDIR}${PYTHON_SITELIBDIR}|%%LIT%%%%PYTHON_SITELIBDIR%%|' \
 	    -e 's|${LLVM_RELEASE:C/\./\\./g}|%%LLVM_RELEASE%%|' \
@@ -469,13 +476,15 @@ build-plist:
 	    if ($$0 ~ /${CLANG_PATTERN}/ && $$0 !~ /omp.h|${EXTRAS_PATTERN}|libclang_rt/) {printf "%%%%CLANG%%%%"} \
 	    if ($$0 ~ /${COMPILER_RT_PATTERN}/) \
 		{printf "%%%%COMPILER_RT%%%%"} \
-	    if ($$0 ~ /lld/ && $$0 !~ /lldb/) {printf "%%%%LLD%%%%"} \
+	    if ($$0 ~ /lld|wasm-ld/ && $$0 !~ /lldb/) {printf "%%%%LLD%%%%"} \
 	    if ($$0 ~ /(${EXTRAS_PATTERN})/) {printf "%%%%EXTRAS%%%%"} \
 	    if ($$0 ~ /(argdumper|lldb|six.py)/) {printf "%%%%LLDB%%%%"} \
-	    if ($$0 ~ /(lib[ig]*omp|omp.h)/) {printf "%%%%OPENMP%%%%"} \
+	    if ($$0 ~ /(lib[ig]*omp|omp.h|ompt.h)/) {printf "%%%%OPENMP%%%%"} \
 	    if ($$0 ~ /LLVMgold/) {printf "%%%%GOLD%%%%"} \
 	    if ($$0 !~ /libclang_rt/) {print} \
 	}' ${PLIST}.tmp >> ${PLIST}
+	${ECHO_CMD} '@postexec if type ccache-update-links >/dev/null 2>&1; then ccache-update-links -v; fi' >> ${PLIST}
+	${ECHO_CMD} '@postunexec if type ccache-update-links >/dev/null 2>&1; then ccache-update-links -v; fi' >> ${PLIST}
 	${RM} ${PLIST}.tmp
 
 check-commands:

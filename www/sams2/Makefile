@@ -11,6 +11,8 @@ COMMENT=	Squid Accounting Management System
 
 LICENSE=	BSD4CLAUSE
 
+IGNORE_WITH_PHP=	70 71 72
+
 LIB_DEPENDS=	libpcre.so:devel/pcre
 RUN_DEPENDS=	${LOCALBASE}/libexec/mysqld:${_MYSQL_SERVER}
 
@@ -28,7 +30,7 @@ SUB_FILES=	sams2.conf.sample
 PORTDOCS=	*
 
 OPTIONS_DEFINE=	DOCS APACHE
-OPTIONS_SUB=	APACHE
+OPTIONS_SUB=	yes
 APACHE_USE=	APACHE=22+
 
 # We can't use <options> here, ${APACHE*} won't be populated

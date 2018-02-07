@@ -140,23 +140,23 @@ MASTER_SITE_DEBIAN+= \
 
 .if !defined(IGNORE_MASTER_SITE_DEBIAN_NON_US)
 MASTER_SITE_DEBIAN_NON_US+= \
-	ftp://ftp.au.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.au.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.bg.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.br.debian.org/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.cl.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.cl.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.cz.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.de.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.ee.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.es.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.fi.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.fr.debian.org/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.hk.debian.org/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.hr.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.hk.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.hr.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.hu.debian.org/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.ie.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.ie.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.is.debian.org/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.it.debian.org/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.jp.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.it.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.jp.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.nl.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.no.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.pl.debian.org/debian-non-US/%SUBDIR%/ \
@@ -165,10 +165,9 @@ MASTER_SITE_DEBIAN_NON_US+= \
 	ftp://ftp.si.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.sk.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.uk.debian.org/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.wa.au.debian.org/debian-non-US/%SUBDIR%/ \
+	http://ftp.wa.au.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp2.de.debian.org/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.snt.utwente.nl/pub/linux/debian-non-US/%SUBDIR%/ \
-	ftp://ftp.df.lth.se/pub/debian-non-US/%SUBDIR%/ \
 	ftp://ftp.acc.umu.se/debian-non-US/%SUBDIR%/ \
 	ftp://mirror.symnds.com/debian-non-US/%SUBDIR%/
 .endif
@@ -224,20 +223,20 @@ MASTER_SITE_CENTOS_LINUX+= \
 
 .if !defined(IGNORE_MASTER_SITE_EPEL)
 MASTER_SITE_EPEL+= \
-	https://dl.fedoraproject.org/pub/epel/6/x86_64/:DEFAULT,amd64 \
-	https://dl.fedoraproject.org/pub/epel/6/i386/:DEFAULT,i386 \
-	https://dl.fedoraproject.org/pub/epel/6/SRPMS/:SOURCE \
-	http://dl.fedoraproject.org/pub/epel/6/x86_64/:DEFAULT,amd64 \
-	http://dl.fedoraproject.org/pub/epel/6/i386/:DEFAULT,i386 \
-	http://dl.fedoraproject.org/pub/epel/6/SRPMS/:SOURCE
+	https://dl.fedoraproject.org/pub/epel/6/x86_64/Packages/%SUBDIR%/:DEFAULT,amd64 \
+	https://dl.fedoraproject.org/pub/epel/6/i386/Packages/%SUBDIR%/:DEFAULT,i386 \
+	https://dl.fedoraproject.org/pub/epel/6/SRPMS/Packages/%SUBDIR%/:SOURCE \
+	http://dl.fedoraproject.org/pub/epel/6/x86_64/Packages/%SUBDIR%/:DEFAULT,amd64 \
+	http://dl.fedoraproject.org/pub/epel/6/i386/Packages/%SUBDIR%/:DEFAULT,i386 \
+	http://dl.fedoraproject.org/pub/epel/6/SRPMS/Packages/%SUBDIR%/:SOURCE
 .endif
 
 .if !defined(IGNORE_MASTER_SITE_EPEL7)
 MASTER_SITE_EPEL7+= \
-	https://dl.fedoraproject.org/pub/epel/7/x86_64/%SUBDIR%/:DEFAULT,amd64 \
-	https://dl.fedoraproject.org/pub/epel/7/SRPMS/%SUBDIR%/:SOURCE \
-	http://dl.fedoraproject.org/pub/epel/7/x86_64/%SUBDIR%/:DEFAULT,amd64 \
-	http://dl.fedoraproject.org/pub/epel/7/SRPMS/%SUBDIR%/:SOURCE
+	https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/%SUBDIR%/:DEFAULT,amd64 \
+	https://dl.fedoraproject.org/pub/epel/7/SRPMS/Packages/%SUBDIR%/:SOURCE \
+	http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/%SUBDIR%/:DEFAULT,amd64 \
+	http://dl.fedoraproject.org/pub/epel/7/SRPMS/Packages/%SUBDIR%/:SOURCE
 .endif
 
 .if !defined(IGNORE_MASTER_SITE_FEDORA_LINUX)
@@ -430,7 +429,7 @@ GH_PROJECT:=	${GH_PROJECT_DEFAULT}
 GH_TAGNAME:=	${GH_TAGNAME_DEFAULT}
 GH_SUBDIR:=	${GH_SUBDIR_DEFAULT}
 .  if defined(GH_TAGNAME)
-GH_TAGNAME_SANITIZED=	${GH_TAGNAME:S,/,-,}
+GH_TAGNAME_SANITIZED=	${GH_TAGNAME:S,/,-,g}
 # GitHub silently converts tags starting with v to not have v in the filename
 # and extraction directory.  It also replaces + with -.
 GH_TAGNAME_EXTRACT=	${GH_TAGNAME_SANITIZED:C/^[vV]([0-9])/\1/:S/+/-/g}
@@ -861,8 +860,8 @@ MASTER_SITE_QMAIL+= \
 
 .if !defined(IGNORE_MASTER_SITE_QT)
 MASTER_SITE_QT+= \
-	http://download.qt-project.org/%SUBDIR%/ \
-	http://master.qt-project.org/%SUBDIR%/ \
+	https://download.qt.io/%SUBDIR%/ \
+	http://master.qt.io/%SUBDIR%/ \
 	http://www.mirrorservice.org/sites/download.qt-project.org/%SUBDIR%/ \
 	http://www.nic.funet.fi/pub/mirrors/download.qt-project.org/%SUBDIR%/ \
 	http://qtmirror.ics.com/pub/qtproject/%SUBDIR%/ \
@@ -988,12 +987,10 @@ MASTER_SITE_TCLTK+= \
 
 .if !defined(IGNORE_MASTER_SITE_TEX_CTAN)
 MASTER_SITE_TEX_CTAN+= \
-	ftp://ctan.unsw.edu.au/tex-archive/%SUBDIR%/ \
-	ftp://ftp.tex.ac.uk/tex-archive/%SUBDIR%/ \
+	http://ctan.unsw.edu.au/%SUBDIR%/ \
 	ftp://ftp.kddlabs.co.jp/CTAN/%SUBDIR%/ \
 	ftp://ctan.tug.org/tex-archive/%SUBDIR%/ \
 	ftp://ftp.dante.de/tex-archive/%SUBDIR%/ \
-	ftp://ftp.chg.ru/pub/TeX/CTAN/%SUBDIR%/ \
 	ftp://mirror.macomnet.net/pub/CTAN/%SUBDIR%/ \
 	ftp://ftp.funet.fi/pub/TeX/CTAN/%SUBDIR%/
 .endif

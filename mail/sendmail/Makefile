@@ -2,7 +2,7 @@
 
 PORTNAME=	sendmail
 PORTVERSION=	8.15.2
-PORTREVISION=	3
+PORTREVISION=	7
 CATEGORIES=	mail ipv6
 MASTER_SITES=	ftp://ftp.sendmail.org/pub/sendmail/
 PKGNAMESUFFIX?=	${TLS_SUFFIX}${SASL_SUFFIX}${LDAP_SUFFIX}${BDB_SUFFIX}${PKGNAMESUFFIX2}
@@ -21,7 +21,7 @@ CONFLICTS?=	courier-0.* postfix-1.* postfix-2.* smail-3.* zmailer-2.* opensmtpd-
 USERS=		smmsp
 GROUPS=		smmsp
 
-USES=		cpe uidfix
+USES=		cpe uidfix groff
 MAKE_ARGS=	UBINOWN=${UID} UBINGRP=${GID} \
 		SBINOWN=${UID} SBINGRP=${GID} \
 		GBINOWN=${UID} GBINGRP=${GID} \
@@ -46,10 +46,11 @@ BASEMAIL=	/usr/libexec/sendmail/sendmail
 MILTER_SOVER?=	6
 
 OPTIONS_DEFINE?=	SHMEM SEM LA NIS IPV6 TLS SASL SASLAUTHD LDAP BDB \
-			GDBM SOCKETMAP CYRUSLOOKUP BLACKLISTD \
+			GDBM SOCKETMAP CYRUSLOOKUP BLACKLISTD SMTPUTF8 \
 			PICKY_HELO_CHECK MILTER DOCS
 OPTIONS_DEFAULT?=	SHMEM SEM LA NIS TLS SASL SASLAUTHD BDB1 \
-			PICKY_HELO_CHECK MILTER
+			BLACKLISTD PICKY_HELO_CHECK MILTER
+OPTIONS_EXCLUDE_FreeBSD_10=	BLACKLISTD
 NO_OPTIONS_SORT=yes
 SHMEM_DESC=		System V shared memory support
 LA_DESC=		load averages support
@@ -62,6 +63,7 @@ BLACKLISTD_DESC=	Enable blacklistd support
 CYRUSLOOKUP_DESC=	Enable cyruslookup feature
 PICKY_HELO_CHECK_DESC=	Enable picky HELO check
 MILTER_DESC=		Enable milter support
+SMTPUTF8_DESC=		Enable unicode address support
 
 TLS_USES=	ssl
 SASL_LIB_DEPENDS=	libsasl2.so:security/cyrus-sasl2
@@ -70,6 +72,7 @@ LDAP_USE=	OPENLDAP=yes
 BDB_USES=	bdb
 GDBM_LIB_DEPENDS=	libgdbm.so:databases/gdbm
 GDBM_CONFIGURE_WITH=	compat
+SMTPUTF8_LIB_DEPENDS=	libidn2.so:dns/libidn2 libicui18n.so:devel/icu
 
 .include <bsd.port.options.mk>
 .if ${PORT_OPTIONS:MSHMEM} && !defined(BUILDING_INDEX)
@@ -97,6 +100,9 @@ IGNORE=		option CYRUSLOOKUP requires option SOCKETMAP
 .else
 EXTRA_PATCHES+=	${FILESDIR}/cyruslookup.patch
 .endif
+.endif
+.if ${PORT_OPTIONS:MSMTPUTF8}
+EXTRA_PATCHES+=	${FILESDIR}/smtputf8.patch
 .endif
 .if ${PORT_OPTIONS:MTLS}
 TLS_SUFFIX?=	+tls
@@ -127,6 +133,9 @@ SITE+=	${FILESDIR}/site.config.m4.ldap
 .endif
 .if ${PORT_OPTIONS:MBLACKLISTD}
 SITE+=	${FILESDIR}/site.config.m4.blacklistd
+.endif
+.if ${PORT_OPTIONS:MSMTPUTF8}
+SITE+=	${FILESDIR}/site.config.m4.smtputf8
 .endif
 .if ${PORT_OPTIONS:MMILTER}
 SITE+=	${FILESDIR}/site.config.m4.milter

@@ -2,9 +2,9 @@
 # $FreeBSD$
 
 PORTNAME=	bmpp
-PORTVERSION=	4.9.7
+DISTVERSION=	4.11.1
 CATEGORIES=	graphics perl5
-MASTER_SITES=	SF/dktools/dktools/dktools-${PORTVERSION}/src
+MASTER_SITES=	SF/dktools/dktools/dktools-${PORTVERSION}
 DISTNAME=	dktools-${PORTVERSION}
 
 MAINTAINER=	takefu@airport.fm

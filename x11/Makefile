@@ -106,6 +106,7 @@
     SUBDIR += gtkterm2
     SUBDIR += guake
     SUBDIR += gxkb
+    SUBDIR += hhpc
     SUBDIR += hs-X11
     SUBDIR += hs-X11-xft
     SUBDIR += hs-xmobar
@@ -205,6 +206,7 @@
     SUBDIR += libxshmfence
     SUBDIR += lightdm
     SUBDIR += lightdm-gtk-greeter
+    SUBDIR += lilyterm
     SUBDIR += linux-c6-pixman
     SUBDIR += linux-c6-xorg-libs
     SUBDIR += linux-c7-pixman
@@ -263,6 +265,7 @@
     SUBDIR += pixman
     SUBDIR += plasma-scriptengine-python
     SUBDIR += plasma-scriptengine-ruby
+    SUBDIR += polybar
     SUBDIR += presentproto
     SUBDIR += printproto
     SUBDIR += printscreen
@@ -279,6 +282,7 @@
     SUBDIR += qterminal
     SUBDIR += qterminal-l10n
     SUBDIR += qxkb
+    SUBDIR += radare-cutter
     SUBDIR += randrproto
     SUBDIR += recordproto
     SUBDIR += rendercheck
@@ -347,6 +351,8 @@
     SUBDIR += wmctrl
     SUBDIR += wmdrawer
     SUBDIR += wmmatrix
+    SUBDIR += wmutils-core
+    SUBDIR += wmutils-opt
     SUBDIR += wmxss
     SUBDIR += workrave
     SUBDIR += x11perf
@@ -368,6 +374,7 @@
     SUBDIR += xbrightness
     SUBDIR += xcalc
     SUBDIR += xcalib
+    SUBDIR += xcape
     SUBDIR += xcb
     SUBDIR += xcb-proto
     SUBDIR += xcb-util

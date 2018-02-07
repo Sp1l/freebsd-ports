@@ -3,6 +3,7 @@
 
     COMMENT = Audio tools
 
+    SUBDIR += GxSwitchlessWah-lv2
     SUBDIR += HVSC-Update
     SUBDIR += Maaate
     SUBDIR += aacgain
@@ -49,11 +50,11 @@
     SUBDIR += autocd
     SUBDIR += autotalent
     SUBDIR += autozen
+    SUBDIR += avldrums-lv2
     SUBDIR += aylet
     SUBDIR += baresip
     SUBDIR += baudline
     SUBDIR += bcg729
-    SUBDIR += beast
     SUBDIR += beep
     SUBDIR += beets
     SUBDIR += blop
@@ -65,9 +66,9 @@
     SUBDIR += cantata
     SUBDIR += caps-lv2
     SUBDIR += caps-plugins
+    SUBDIR += carla
     SUBDIR += cava
     SUBDIR += ccaudio2
-    SUBDIR += cd-console
     SUBDIR += cd-discid
     SUBDIR += cd2mp3
     SUBDIR += cddb-bundle
@@ -142,6 +143,7 @@
     SUBDIR += faac
     SUBDIR += faad
     SUBDIR += fapg
+    SUBDIR += faust
     SUBDIR += fcplay
     SUBDIR += fdk-aac
     SUBDIR += fdmf
@@ -177,11 +179,12 @@
     SUBDIR += flake
     SUBDIR += flite
     SUBDIR += fluid-soundfont
+    SUBDIR += fluidplug-lv2
     SUBDIR += fluidsynth
     SUBDIR += fluidsynth-dssi
     SUBDIR += fmit
-    SUBDIR += foo-yc20
     SUBDIR += fomp-lv2
+    SUBDIR += foo-yc20
     SUBDIR += forked-daapd
     SUBDIR += fpc-a52
     SUBDIR += fpc-mad
@@ -197,7 +200,6 @@
     SUBDIR += gbsplay
     SUBDIR += gervill
     SUBDIR += ghostess
-    SUBDIR += gigedit
     SUBDIR += gimmix
     SUBDIR += gkrellmms2
     SUBDIR += gkrellmss2
@@ -225,7 +227,6 @@
     SUBDIR += gmusicbrowser
     SUBDIR += gnaural
     SUBDIR += gnome-music
-    SUBDIR += gnomoradio
     SUBDIR += gnormalize
     SUBDIR += gnuitar
     SUBDIR += gnupod
@@ -310,6 +311,7 @@
     SUBDIR += gtkguitune
     SUBDIR += gtkpod
     SUBDIR += gtmixer
+    SUBDIR += guidolib
     SUBDIR += guspat
     SUBDIR += gvolwheel
     SUBDIR += gxmms2
@@ -320,8 +322,8 @@
     SUBDIR += hs-ALUT
     SUBDIR += hs-OpenAL
     SUBDIR += hs-libmpd
+    SUBDIR += hts_engine-API
     SUBDIR += hydrogen
-    SUBDIR += hydrogen-devel
     SUBDIR += icecast-kh
     SUBDIR += icecast2
     SUBDIR += icegenerator
@@ -368,7 +370,6 @@
     SUBDIR += ladspa
     SUBDIR += lame
     SUBDIR += lash
-    SUBDIR += last.fm
     SUBDIR += lastfm-desktop
     SUBDIR += liba52
     SUBDIR += libaacplus
@@ -468,7 +469,6 @@
     SUBDIR += linux-c7-sdl_mixer
     SUBDIR += linux-genpuid
     SUBDIR += linux-laudio
-    SUBDIR += linux-mbrola
     SUBDIR += linux-skype_oss_wrapper
     SUBDIR += linuxsampler
     SUBDIR += listener
@@ -493,7 +493,6 @@
     SUBDIR += maplay
     SUBDIR += mate-media
     SUBDIR += mbox
-    SUBDIR += mbrolavox
     SUBDIR += mcplay
     SUBDIR += mctoolame-decoder
     SUBDIR += mctoolame-encoder
@@ -562,6 +561,7 @@
     SUBDIR += ncmpc
     SUBDIR += ncmpcpp
     SUBDIR += nekobee
+    SUBDIR += noise-repellent-lv2
     SUBDIR += normalize
     SUBDIR += nosefart
     SUBDIR += nspmod
@@ -620,11 +620,13 @@
     SUBDIR += p5-tagged
     SUBDIR += p5-xmms2
     SUBDIR += pacpl
+    SUBDIR += padthv1-lv2
     SUBDIR += paman
     SUBDIR += paprefs
     SUBDIR += patchage
     SUBDIR += pavucontrol
     SUBDIR += pavumeter
+    SUBDIR += pc-mixer
     SUBDIR += pd
     SUBDIR += pd-cyclone
     SUBDIR += pear-Text_Spell_Audio
@@ -637,6 +639,7 @@
     SUBDIR += playmidi
     SUBDIR += pm3umpdl
     SUBDIR += pms
+    SUBDIR += pms-devel
     SUBDIR += pocketsphinx
     SUBDIR += polyphone
     SUBDIR += portaudio
@@ -660,7 +663,6 @@
     SUBDIR += py-hsaudiotag
     SUBDIR += py-id3
     SUBDIR += py-karaoke
-    SUBDIR += py-mad
     SUBDIR += py-mpd
     SUBDIR += py-mpd2
     SUBDIR += py-musicbrainz2
@@ -674,17 +676,18 @@
     SUBDIR += py-pyaudio
     SUBDIR += py-pylast
     SUBDIR += py-pyliblo
+    SUBDIR += py-pymad
     SUBDIR += py-pysndfile
     SUBDIR += py-shout
     SUBDIR += py-soundcloud
+    SUBDIR += py-sounddevice
     SUBDIR += py-soundscrape
     SUBDIR += py-speechrecognition
     SUBDIR += py-speex
     SUBDIR += py-tagpy
     SUBDIR += py-vorbis
+    SUBDIR += py-wavio
     SUBDIR += py-xmms2
-    SUBDIR += py3-mutagen
-    SUBDIR += py3-pylast
     SUBDIR += pytone
     SUBDIR += qjackctl
     SUBDIR += qmidiarp
@@ -714,7 +717,6 @@
     SUBDIR += rubberband
     SUBDIR += ruby-smf
     SUBDIR += ruby-taglib
-    SUBDIR += ruby-xmms2
     SUBDIR += rubygem-librmpd
     SUBDIR += rubygem-ruby-mp3info
     SUBDIR += rubygem-ruby-ogginfo
@@ -724,13 +726,13 @@
     SUBDIR += sbagen
     SUBDIR += sc3-plugins
     SUBDIR += schismtracker
+    SUBDIR += screcord-lv2
     SUBDIR += scrobbler
     SUBDIR += sdl2_mixer
     SUBDIR += sdl_mixer
     SUBDIR += sdl_sound
     SUBDIR += sfront
     SUBDIR += shairplay
-    SUBDIR += shairport
     SUBDIR += shairport-sync
     SUBDIR += sherlock-lv2
     SUBDIR += shntool
@@ -752,6 +754,7 @@
     SUBDIR += solfege
     SUBDIR += sonata
     SUBDIR += sonic-visualiser
+    SUBDIR += sorcer-lv2
     SUBDIR += sound-juicer
     SUBDIR += soundconverter
     SUBDIR += soundgrab
@@ -846,6 +849,7 @@
     SUBDIR += wildmidi
     SUBDIR += wmalbum
     SUBDIR += wmix
+    SUBDIR += wmmp
     SUBDIR += wmrecord
     SUBDIR += wmsmixer
     SUBDIR += workman

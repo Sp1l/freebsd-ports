@@ -91,17 +91,21 @@
     SUBDIR += R-cran-units
     SUBDIR += R-cran-xts
     SUBDIR += R-cran-zoo
+    SUBDIR += SCIP
+    SUBDIR += SoPlex
     SUBDIR += aamath
     SUBDIR += abacus
     SUBDIR += abakus
     SUBDIR += abs
     SUBDIR += acalc
     SUBDIR += add
+    SUBDIR += adept
     SUBDIR += algae
     SUBDIR += alglib
     SUBDIR += algotutor
     SUBDIR += alt-ergo
     SUBDIR += amath
+    SUBDIR += ambit
     SUBDIR += analitza
     SUBDIR += ann
     SUBDIR += apc
@@ -111,7 +115,6 @@
     SUBDIR += arpack++
     SUBDIR += arpack-ng
     SUBDIR += arpack-ng-mpich
-    SUBDIR += asir2000
     SUBDIR += aspcud
     SUBDIR += asymptote
     SUBDIR += atlas
@@ -165,6 +168,7 @@
     SUBDIR += emc2
     SUBDIR += ent
     SUBDIR += entropy
+    SUBDIR += eprover
     SUBDIR += ess
     SUBDIR += eukleides
     SUBDIR += eval
@@ -178,6 +182,7 @@
     SUBDIR += fftw3-long
     SUBDIR += fftw3-quad
     SUBDIR += fityk
+    SUBDIR += flann
     SUBDIR += form
     SUBDIR += fpc-fftw
     SUBDIR += fpc-gmp
@@ -199,6 +204,7 @@
     SUBDIR += glgraph
     SUBDIR += glm
     SUBDIR += glpk
+    SUBDIR += glucose
     SUBDIR += gmm++
     SUBDIR += gmp
     SUBDIR += gmp-ecm
@@ -206,6 +212,7 @@
     SUBDIR += gnubc
     SUBDIR += gnumeric
     SUBDIR += gnuplot
+    SUBDIR += gnuplot-lite
     SUBDIR += gnuplot-tex-extras
     SUBDIR += goblin
     SUBDIR += gotoblas
@@ -274,6 +281,7 @@
     SUBDIR += libRmath
     SUBDIR += libflame
     SUBDIR += liblbfgs
+    SUBDIR += libmesh
     SUBDIR += libmissing
     SUBDIR += libocas
     SUBDIR += liborigin
@@ -323,6 +331,7 @@
     SUBDIR += nauty
     SUBDIR += ndiff
     SUBDIR += newmat
+    SUBDIR += nfft
     SUBDIR += ngraph
     SUBDIR += nlopt
     SUBDIR += ntl
@@ -597,6 +606,8 @@
     SUBDIR += php70-gmp
     SUBDIR += php71-bcmath
     SUBDIR += php71-gmp
+    SUBDIR += php72-bcmath
+    SUBDIR += php72-gmp
     SUBDIR += physcalc
     SUBDIR += picosat
     SUBDIR += plman
@@ -649,6 +660,7 @@
     SUBDIR += py-patsy
     SUBDIR += py-plastex
     SUBDIR += py-probstat
+    SUBDIR += py-pyasp
     SUBDIR += py-pybloom
     SUBDIR += py-pycosat
     SUBDIR += py-pyhull
@@ -703,6 +715,7 @@
     SUBDIR += scilab-toolbox-swt
     SUBDIR += sdpa
     SUBDIR += sdpara
+    SUBDIR += secp256k1
     SUBDIR += sfft
     SUBDIR += sfst
     SUBDIR += simd-viterbi
@@ -718,14 +731,18 @@
     SUBDIR += spooles-mpich
     SUBDIR += stp
     SUBDIR += suitesparse
+    SUBDIR += sundials
     SUBDIR += superlu
     SUBDIR += superlu_mt
     SUBDIR += surf
+    SUBDIR += symmetrica
     SUBDIR += tablix
     SUBDIR += taucs
+    SUBDIR += tblis
     SUBDIR += testu01
     SUBDIR += tetgen
     SUBDIR += timbl
+    SUBDIR += tmv
     SUBDIR += tomsfastmath
     SUBDIR += topaz
     SUBDIR += triangle
@@ -757,5 +774,6 @@
     SUBDIR += xspread
     SUBDIR += yacas
     SUBDIR += z3
+    SUBDIR += zimpl
 
 .include <bsd.port.subdir.mk>

@@ -25,11 +25,13 @@
     SUBDIR += baka-mplayer
     SUBDIR += bino
     SUBDIR += bitstream
-    SUBDIR += bombono
+    SUBDIR += blind
     SUBDIR += bsdbktr_tvtune
     SUBDIR += camserv
+    SUBDIR += ccextractor
     SUBDIR += cclive
     SUBDIR += cheese
+    SUBDIR += chilitags
     SUBDIR += clipgrab
     SUBDIR += clive
     SUBDIR += clutter-gst
@@ -40,7 +42,6 @@
     SUBDIR += devede
     SUBDIR += dirac
     SUBDIR += dragon
-    SUBDIR += dtv
     SUBDIR += dtv-scan-tables
     SUBDIR += dumpmpeg
     SUBDIR += dv2jpg
@@ -170,6 +171,7 @@
     SUBDIR += kissdx
     SUBDIR += kmplayer-kde4
     SUBDIR += kodi
+    SUBDIR += kodi-devel
     SUBDIR += kplayer-kde4
     SUBDIR += kvazaar
     SUBDIR += l-smash
@@ -204,11 +206,11 @@
     SUBDIR += libquvi-scripts
     SUBDIR += libquvi-scripts09
     SUBDIR += libquvi09
-    SUBDIR += librespot
     SUBDIR += librtmp
     SUBDIR += libsmacker
     SUBDIR += libtheora
     SUBDIR += libtuner
+    SUBDIR += libuvc
     SUBDIR += libv4l
     SUBDIR += libva
     SUBDIR += libva-intel-driver
@@ -332,6 +334,7 @@
     SUBDIR += py-moviepy
     SUBDIR += py-openlp
     SUBDIR += py-periscope
+    SUBDIR += py-pretty_midi
     SUBDIR += py-qt4-multimedia
     SUBDIR += py-qt4-phonon
     SUBDIR += py-qt5-multimedia
@@ -339,7 +342,6 @@
     SUBDIR += py-soco
     SUBDIR += py-subliminal
     SUBDIR += py-tvnamer
-    SUBDIR += py3-gstreamer1
     SUBDIR += pyjama
     SUBDIR += pymp
     SUBDIR += qmmp
@@ -443,6 +445,7 @@
     SUBDIR += vtkmpeg2encode
     SUBDIR += w_scan
     SUBDIR += webcamd
+    SUBDIR += webcamoid
     SUBDIR += webvfx-qt5
     SUBDIR += win32-codecs
     SUBDIR += winff

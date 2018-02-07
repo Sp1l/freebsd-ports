@@ -59,6 +59,7 @@
     SUBDIR += ocaml-base64
     SUBDIR += ocaml-jsonm
     SUBDIR += osm2mp
+    SUBDIR += osm2pgrouting
     SUBDIR += osm2pgsql
     SUBDIR += p5-Bencode
     SUBDIR += p5-Boulder
@@ -146,6 +147,9 @@
     SUBDIR += php71-iconv
     SUBDIR += php71-mbstring
     SUBDIR += php71-recode
+    SUBDIR += php72-iconv
+    SUBDIR += php72-mbstring
+    SUBDIR += php72-recode
     SUBDIR += psiconv
     SUBDIR += py-bcode
     SUBDIR += py-bencode.py

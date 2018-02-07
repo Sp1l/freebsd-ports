@@ -3,7 +3,7 @@
 
 PORTNAME=	zorba
 PORTVERSION=	2.7.0
-PORTREVISION=	17
+PORTREVISION=	18
 CATEGORIES=	textproc
 MASTER_SITES=	https://launchpadlibrarian.net/119058962/
 DISTNAME=	${PORTNAME}-src-${PORTVERSION}
@@ -82,7 +82,8 @@ CMAKE_ARGS+=	-DJAVA_LIBDIR:PATH=${JAVALIBDIR}
 .endif
 
 .if defined(WITH_SWIG)
-BUILD_DEPENDS+=	swig2.0:devel/swig20
+BUILD_DEPENDS+=	swig3.0:devel/swig30
+BINARY_ALIAS=	swig=swig3.0
 .endif
 
 post-patch:

@@ -9,6 +9,7 @@
     SUBDIR += adwaita-icon-theme
     SUBDIR += adwaita-qt4
     SUBDIR += adwaita-qt5
+    SUBDIR += arc-gruvbox-theme
     SUBDIR += audacious-skins
     SUBDIR += beastie
     SUBDIR += claws-mail-themes
@@ -146,6 +147,7 @@
     SUBDIR += murrine-configurator
     SUBDIR += nimbus
     SUBDIR += numix-theme
+    SUBDIR += openbox-arc-theme
     SUBDIR += openbox-themes
     SUBDIR += plank-theme-moka
     SUBDIR += qt4-style-Kvantum
@@ -167,6 +169,7 @@
     SUBDIR += thewidgetfactory
     SUBDIR += ubuntulooks
     SUBDIR += xcursor-themes
+    SUBDIR += xfce-evolution
     SUBDIR += xfce-icons-elementary
 
 .include <bsd.port.subdir.mk>

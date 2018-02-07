@@ -5,6 +5,327 @@ they are unavoidable.
 You should get into the habit of checking this file for changes each time
 you update your ports collection, before attempting any port upgrades.
 
+20180201:
+  AFFECTS: users of editors/emacs* and all ports using Emacs via USES=emacs
+  AUTHOR: jrm@FreeBSD.org
+
+  The Emacs ports framework has been updated to support flavors and the
+  editors/emacs-nox11 port has been replaced by the nox flavors of
+  editors/emacs and editors/emacs-devel.
+
+  Supported Flavors
+  --------------------------------------------------------
+  editors/emacs:       full canna nox
+  editors/emacs-devel: full nox
+  ports using Emacs:   full canna nox devel_full devel_nox
+  --------------------------------------------------------
+
+  For those using pre-built packages, if
+
+     # pkg upgrade
+
+  does not install the new Emacs package, use one of
+
+     # pkg install emacs
+     # pkg install emacs-canna
+     # pkg install emacs-nox
+     # pkg install emacs-devel
+     # pkg install emacs-devel_nox
+
+  For those building their own packages, a flavor other than the default must be
+  specified.  For example, to build the nox flavor of editors/emacs, or to build
+  the devel_full flavor of a port using Emacs, use
+
+     # poudriere bulk -j 11amd64 editors/emacs@nox
+     # poudriere bulk -j 11amd64 print/pdf-tools@devel_full
+
+  or
+
+     # make FLAVOR=nox install
+     # make FLAVOR=devel_full
+
+  For ports using Emacs, an alternative to the default flavor, full,
+  can be set in make.conf.  For example, to automatically depend on
+  emacs-nox, use
+
+     DEFAULT_VERSIONS+=emacs=nox
+
+20180117:
+  AFFECTS: users of x11-toolkits/kf5-kirigami2 and x11/kf5-plasma-framework
+  AUTHOR: kde@FreeBSD.org
+
+  Files that were previously installed by kf5-kirigami2 are now installed 
+  by kf5-plasma-framework. This can lead to a conflict during the upgrade
+  of the packages. 
+  It is recommended to first remove the package kf5-kirigami2.
+
+20180115
+  AFFECTS: users of net-p2p/transmission-daemon
+  AUTHOR: woodsb02@FreeBSD.org
+
+  The transmission-daemon port has been updated to 2.92_4 to incorporate
+  a patch which mitigates DNS rebinding attacks. This will prevent
+  clients from being able to connect to the transmission daemon using
+  DNS with any hostname other than localhost, unless one of the
+  following is done:
+    - Enable password authentication, then any hostname is allowed.
+      This can be achieved by either:
+        - setting rpc-authentication-required to true, and adding
+          credentials to the rpc-username and rpc-password fields in
+          settings.json (must be done whilst the transmission service is
+          stopped); or
+        - running transmission-daemon with the following arguments
+          (these can be set with transmission_flags in /etc/rc.conf):
+          -t -u USERNAME -v PASSWORD
+    OR
+    - Add the allowed server hostnames to the rpc-host-whitelist setting
+      in settings.json (must be done whilst the transmission service is
+      stopped). Note that this value is NOT a list of allowed CLIENTS,
+      but instead a list of allowed SERVER hostnames.
+
+20180111
+  AFFECTS: users of editors/vim-lite
+  AUTHOR: adamw@FreeBSD.org
+
+  The vim-lite port has been renamed to vim-console, because it isn't
+  actually any lighter. All three vim packages are built with
+  --enable-features=huge. Portmaster users will need to run this
+  command:
+
+  	portmaster -o editors/vim-console editors/vim-lite
+
+  If the switch doesn't happen automatically for you, just delete the
+  vim-lite package and install vim-console.
+
+20180109
+  AFFECTS: users of www/qt5-webengine
+  AUTHOR: kde@FreeBSD.org
+
+  The upgrade of www/qt5-webengine to 5.9.3 may fail if an older version
+  of it is installed. It is recommended to either build the port in a
+  builder like poudriere, or to deinstall and then doing an install.
+
+20180107
+  AFFECTS: users of security/gnupg and mail/mutt and mail/neomutt
+  AUTHOR: adamw@FreeBSD.org
+
+  The invocation for gpg from mutt/neomutt changed between gnupg-2.0
+  (which has expired and is now removed) and gnupg-2.2 (the current
+  version in the tree). Unless you're using gpgme, PGP-related
+  commands may fail in (neo)mutt.
+
+  In all cases, users are strongly urged to use security/gpgme to take
+  care of the setup for you. If you prefer to roll your own, the
+  following muttrc/neomuttrc entry has been reported to work:
+
+  pgp_decrypt_command="gpg2 %?p?--passphrase-fd 0 --pinentry-mode=loopback? --no-verbose --batch --output - %f"
+
+  See muttrc(5), neomuttrc(5), mutt.org, and neomutt.org for instructions
+  on (neo)mutt's gpg and gpgme instructions.
+
+20180102:
+  AFFECTS: users of devel/awscli
+  AUTHOR: bhughes@FreeBSD.org
+
+  The package name for devel/awscli has changed (back) to just awscli.
+  The introduction of flavors erroneously caused the awscli package to
+  be renamed to py27-awscli.
+
+20171230:
+  AFFECTS: users of net-im/ejabberd
+  AUTHOR: ashish@FreeBSD.org
+
+  If you are building ejabberd 17.11 on a host, which already has an older 
+  version of ejabberd installed, then build process will fail with "unknown type
+  specifier" errors. As a workaround, please uninstall ejabberd before building
+  ejabberd.
+
+  This has been reported upstream at:
+  https://github.com/processone/ejabberd/issues/2194
+
+20171223:
+  AFFECTS: users of dns/dnscrypt-proxy
+  AUTHOR: egypcio@googlemail.com
+
+  The 1.9.5_3 update of dns/dnscrypt-proxy replaces the default resolver used
+  by dnscrypt-proxy (cisco/OpenDNS) by a random one that does not log entries
+  and supports dnssec.
+
+20171223:
+  AFFECTS: users of samba44
+  AUTHOR: antoine@FreeBSD.org
+
+  The default version of samba has been switched from 4.4 to 4.6.
+  Upgrade instructions:
+
+  For package users having samba44 installed indirectly (as a dependency):
+    # pkg upgrade
+
+  For package users having samba44 installed directly (leaf port):
+    # pkg upgrade
+    # pkg install samba46
+
+  For ports users:
+    If you want to keep samba44, add DEFAULT_VERSIONS+= samba=4.4 to make.conf
+
+    If you want to upgrade to samba46, remove samba44:
+    # pkg delete -f samba44
+
+    Portmaster users:
+    # portmaster net/samba46
+    # portmaster -a
+
+    Portupgrade users:
+    # portinstall net/samba46
+    # portupgrade -a
+
+20171218:
+  AFFECTS: users of devel/gogs
+  AUTHOR: dg@syrec.org
+
+  Gogs user has been changed to "git" and configuration files are now
+  located in /usr/local/etc/gogs. Users should update ownership of the
+  existing Gogs directories with
+
+  # chown -R git:git /var/db/gogs
+  # chown -R git:git /var/log/gogs
+
+  and either move or merge the contents of /var/db/gogs/home/.ssh with
+  /usr/local/git/.ssh.  After migration, /var/db/gogs/home can be removed,
+  and both the user "gogs" and the group "gogs" should be deleted:
+
+  # rm -rf /var/db/gogs/home
+  # pw userdel gogs
+  # pw groupdel gogs
+
+20171215:
+  AFFECTS: users of finance/gnucash
+  AUTHOR: madpilot@FreeBSD.org
+
+  The gnucash port has been converted too use flavors, the GUILE1
+  and GUILE2 options have been converted to flavors so that two
+  separate packages can be provided.
+
+  Since the next major release of gnucash will drop guile1 support,
+  the default flavor package is compiled against guile2, switching
+  the previous default.
+
+  Users who intend to stay on the guile1 version should deinstall
+  the default gnucash package and install the gnucash-guile1 package.
+
+20171214:
+  AFFECTS: all ports users
+  AUTHOR: adamw@FreeBSD.org
+
+  Support for some deprecated variables is going to be removed soon. If
+  you use any of the following constructs (usually in /etc/make.conf),
+  you must switch to the new incantations:
+
+               OLD                                 NEW
+  -------------------------------    ------------------------------
+  WITH_[...]                         OPTIONS_SET= [...]
+  WITHOUT_[...]                      OPTIONS_UNSET= [...]
+  WITHOUT_NLS                        OPTIONS_UNSET= NLS
+  NOPORTDOCS                         OPTIONS_UNSET= DOCS
+  NOPORTEXAMPLES                     OPTIONS_UNSET= EXAMPLES
+  WITH_BDB_VER=[...]                 DEFAULT_VERSIONS+= bdb=[...]
+  OVERRIDE_LINUX_BASE_PORT=[...]     DEFAULT_VERSIONS+= linux=[...]
+  WITH_OPENSSL_BASE                  DEFAULT_VERSIONS+= ssl=base
+  WITH_OPENSSL_PORT                  DEFAULT_VERSIONS+= ssl=port
+
+20171205:
+  AFFECTS: users of dns/powerdns
+  AUTHOR: krion@FreeBSD.org
+
+  Recursor passthrough removal: This will impact many installations.
+  Previously, the PowerDNS Authoritative Server contained a facility
+  for sending recursion desired queries to a resolving backend,
+  possibly after first consulting its local cache. This feature
+  (‘recursor=’) was frequently confusing and also delivered
+  inconsistent results, for example when a query ended up referring
+  to a CNAME that was outside of the Authoritative Server’s
+  knowledge.
+
+20171203:
+  AFFECTS: users of sysutils/dsbmd
+  AUTHOR: mk@freeshell.de
+
+  Due to new configuration variables and new features, users of dsbmd
+  version 0.4.1 and earlier should consider recreating their dsbmd.conf from
+  the new dsbmd.conf.sample.
+
+20171130:
+  AFFECTS: all ports users
+  AUTHOR: adamw@FreeBSD.org
+
+  The ports tree has gained "flavors," which are a way to produce multiple
+  variations of a port. Some intended examples of this are language
+  modules being produced for multiple language versions, and lite/nox11 packages,
+  without needing separate ports for each variation. Python ports have already
+  been flavored (see the below entry). Flavor support must be added to
+  individual ports.
+
+  Flavors are already supported by make, pkg, poudriere, and synth; see the
+  manpages for those tools for usage instructions. Portmaster and portupgrade
+  don't support flavors yet, but community work on those tools is in progress.
+
+  Some bumps and breakages are inevitable for a major change such as this.
+  Please report breakages and monitor the ports@ list for solutions as they
+  become available.
+
+20171130:
+  AFFECTS: */py*
+  AUTHOR: mat@FreeBSD.org
+
+  Ports using Python via USES=python are now flavored.  All the py3-* ports
+  have been removed and folded into their py-* master ports.
+
+  People using Poudriere 3.2+ and binary packages do not have to do anything.
+
+  For other people, to build the Python 3.6 version of, for example,
+  databases/py-gdbm, you need to run:
+
+    # make FLAVOR=py36 install
+
+20171126:
+  AFFECTS: users of security/p5-openxpki
+  AUTHOR: dbaio@FreeBSD.org
+
+  OpenXPKI has been updated to 1.19.4, some important changes were made, please
+  see the upgrading documentation for more details:
+
+  http://openxpki.readthedocs.io/en/latest/upgrading.html
+
+20171126:
+  AFFECTS: users of mail/sympa
+  AUTHOR: dgeo@centrale-marseille.fr
+
+  Web's static dirs have moved to a single dedicated directory.
+  Users should review webserver's /static configuration (examples in
+  share/examples/sympa).
+
+20171119:
+  AFFECTS: users of sysutils/zrepl
+  AUTHOR: woodsb02@FreeBSD.org
+
+  Zrepl has been updated to 0.0.2, which introduces two changes that will
+  require existing users to change their zrepl.yml config file:
+    - global.logging is no longer a dictionary but a list.
+      Refer to the new format here: https://zrepl.github.io/configuration/logging.html
+    - source job field datasets renamed to filesystems.
+      Refer to the new format here: https://zrepl.github.io/configuration/jobs.html
+
+    https://zrepl.github.io/changelog.html#id1
+
+20171117:
+  AFFECTS: users of sysutils/terraform
+  AUTHOR: lifanov@FreeBSD.org
+
+  Terraform has been updated to 0.11, which introduces several incompatible
+  changes. Please follow upgrading guide when updating the package.
+
+    https://www.terraform.io/upgrade-guides/0-11.html
+
 20171114:
   AFFECTS: users of ports-mgmt/poudriere
   AUTHOR: bdrewery@FreeBSD.org
@@ -139,18 +460,6 @@ you update your ports collection, before attempting any port upgrades.
 
   The HPN option is currently disabled by default, and does not build,
   in the package.  This follows what happened in base as well.
-
- 20171006:
-  AFFECTS: users of graphics/netpbm
-  AUTHOR: tobik@FreeBSD.org
-
-  If you use portmaster/portupgrade/make to build your ports, please
-  uninstall the old netpbm version first before attempting to update to
-  netpbm 10.80.00:
-
-	pkg delete -f netpbm
-
-  It is recommended that you rebuild all dependent ports as well.
 
 20171004:
   AFFECTS: users of security/krb5-appl

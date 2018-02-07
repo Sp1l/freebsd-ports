@@ -24,7 +24,8 @@ PLIST_SUB+=	LIBVERSION=5.0.5 VERSION=${PORTVERSION}
 INFO=		${PORTNAME}
 PORTDOCS=	AUTHORS ChangeLog NEWS README* THANKS TODO
 
-OPTIONS_DEFINE=		DOCS EMACS GNUTLS GSSAPI GUILE MH NNTP NLS PAM PYTHON
+OPTIONS_DEFINE=		DEBUG DOCS EMACS GNUTLS GSSAPI GUILE MH NNTP NLS \
+			PAM PYTHON
 OPTIONS_DEFAULT=	GDBM GNUTLS PAM
 OPTIONS_MULTI=		DB
 OPTIONS_MULTI_DB=	BDB GDBM KYOTOCABINET LDAP MYSQL PGSQL TOKYOCABINET
@@ -37,7 +38,9 @@ KYOTOCABINET_DESC=	Kyoto Cabinet database support
 MH_DESC=		MH (Message Handling) system support
 TOKYOCABINET_DESC=	Tokyo Cabinet database support
 
-EMACS_USE=		EMACS=yes
+DEBUG_CONFIGURE_ON=	--enable-debug
+
+EMACS_USES=		emacs:build
 EMACS_IMPLIES=		MH
 
 GNUTLS_LIB_DEPENDS=	libgnutls.so:security/gnutls
@@ -59,7 +62,7 @@ NLS_CONFIGURE_ENABLE=	nls
 PAM_CONFIGURE_ENABLE=	pam
 
 PYTHON_BUILD_DEPENDS=	python-config:lang/python
-PYTHON_USES=		python
+PYTHON_USES=		python:2.7
 PYTHON_CONFIGURE_ENABLE=python
 
 BDB_USES=		bdb:48
@@ -85,12 +88,6 @@ PGSQL_CONFIGURE_WITH=	postgres
 
 TOKYOCABINET_LIB_DEPENDS=	libtokyocabinet.so:databases/tokyocabinet
 TOKYOCABINET_CONFIGURE_WITH=	tokyocabinet
-
-.include <bsd.port.options.mk>
-
-.if ${PORT_OPTIONS:MMH} && exists(${LOCALBASE}/bin/emacs)
-USE_EMACS=	yes
-.endif
 
 post-patch:
 	@${REINPLACE_CMD} -e '/need_charset_alias=/s|true|false|' \

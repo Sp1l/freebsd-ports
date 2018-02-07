@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	vim
-PORTVERSION=	8.0.1289
-PORTREVISION=	1
+PORTVERSION=	8.0.1458
 DISTVERSIONPREFIX=	v
 CATEGORIES=	editors
 
@@ -15,7 +14,7 @@ LICENSE_NAME=	VIM License
 LICENSE_FILE=	${WRKSRC}/runtime/doc/uganda.txt
 LICENSE_PERMS=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
 
-CONFLICTS_INSTALL?=	vim-lite-[0-9]*
+CONFLICTS_INSTALL?=	vim-console vim-tiny
 
 USES=		cpe iconv ncurses pkgconfig shebangfix
 USE_GITHUB=	yes
@@ -31,7 +30,7 @@ CPE_VERSION=	${PORTVERSION:R}
 GNU_CONFIGURE=	yes
 MAKE_JOBS_UNSAFE=	yes
 PLIST_SUB=	VIM_VER=${VIM_VER}
-PORTDATA=	${VIM_VER}
+PORTDATA?=	${VIM_VER}
 PORTSCOUT=	ignore:1
 REINPLACE_ARGS=	-i ''
 SHEBANG_FILES=	runtime/tools/demoserver.py runtime/tools/efm_perl.pl
@@ -46,11 +45,16 @@ OPTIONS_GROUP=		LANGBIND
 OPTIONS_GROUP_LANGBIND=	LUA PERL PYTHON2 PYTHON3 RUBY SCHEME TCL
 OPTIONS_SUB=		yes
 
-.if defined(LITE)
+.if defined(CONSOLE)
 OPTIONS_DEFAULT=	DEFAULT_VIMRC
 OPTIONS_SLAVE=		CONSOLE
 # Exclude everything except the two options above
 OPTIONS_EXCLUDE:=	${OPTIONS_DEFINE:NDEFAULT_VIMRC} \
+			${OPTIONS_SINGLE_UI:NCONSOLE} \
+			${OPTIONS_GROUP_LANGBIND}
+.elif defined(TINY)
+OPTIONS_SLAVE=		CONSOLE
+OPTIONS_EXCLUDE:=	${OPTIONS_DEFINE} \
 			${OPTIONS_SINGLE_UI:NCONSOLE} \
 			${OPTIONS_GROUP_LANGBIND}
 .endif
@@ -71,12 +75,12 @@ SCHEME_DESC=		MzScheme (Racket) bindings
 OPTIONS_EXCLUDE_powerpc64=	RUBY
 
 # GENERAL OPTIONS
-CSCOPE_ENABLE=		cscope
+CSCOPE_CONFIGURE_ENABLE=cscope
 CSCOPE_RUN_DEPENDS=	cscope:devel/cscope
 
 EXUBERANT_CTAGS_RUN_DEPENDS=	exctags:devel/ctags
 
-NLS_ENABLE=		nls
+NLS_CONFIGURE_ENABLE=	nls
 NLS_USES=		gettext
 
 # UI
@@ -157,6 +161,7 @@ post-configure:
 # Needed when devel/libsysinfo is installed:
 	@${REINPLACE_CMD} -e '/#define HAVE_SYSINFO 1/ d' ${WRKSRC}/src/auto/config.h
 
+.if !defined(TINY)
 post-install:
 	@${RM} ${STAGEDIR}${PREFIX}/bin/ex
 	@${RM} ${STAGEDIR}${PREFIX}/bin/view
@@ -188,5 +193,6 @@ post-install-NLS-off:
 	@${MKDIR} ${STAGEDIR}${DATADIR}/${VIM_VER}/lang
 	@${MKDIR} ${STAGEDIR}${DATADIR}/${VIM_VER}/keymap
 	${INSTALL_DATA} ${WRKSRC}/runtime/keymap/* ${STAGEDIR}${DATADIR}/${VIM_VER}/keymap
+.endif	#!defined(TINY)
 
 .include <bsd.port.mk>

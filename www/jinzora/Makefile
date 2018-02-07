@@ -7,8 +7,10 @@ PORTREVISION=	1
 CATEGORIES=	www multimedia
 MASTER_SITES=	SF/${PORTNAME}/Jinzora%20${PORTVERSION}
 
-MAINTAINER=	kevlo@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Web based media streaming and management system
+
+IGNORE_WITH_PHP=	70 71 72
 
 USES=		php
 USE_PHP=	mysql session iconv gd pdf
