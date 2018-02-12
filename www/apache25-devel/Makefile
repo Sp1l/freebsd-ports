@@ -1,12 +1,11 @@
 # $FreeBSD: head/www/apache24/Makefile 450116 2017-09-19 12:21:17Z zi $
 
-PORTNAME=	apache25
-PORTVERSION=	2.5.0
-DISTVERSIONSUFFIX=	-alpha
+PORTNAME=	apache
+DISTVERSION=	2.5.0-alpha
 MASTER_SITES=	https://dist.apache.org/repos/dist/dev/httpd/
 CATEGORIES=	www ipv6
-DISTNAME=	httpd-${PORTVERSION}${DISTVERSIONSUFFIX}
-PKGNAMESUFFIX=	-devel
+DISTNAME=	httpd-${DISTVERSION}
+PKGNAMESUFFIX=	25-devel
 
 MAINTAINER=	apache@FreeBSD.org
 COMMENT=	Version 2.5.x of Apache web server
@@ -20,7 +19,7 @@ LIB_DEPENDS=	libexpat.so:textproc/expat2 \
 
 CONFLICTS_INSTALL=	caudium14-* apache22-2* apache24-2*
 
-USES=		apache:server,2.5 autoreconf cpe gmake iconv libtool perl5 tar:bzip2
+USES=		apache:server,2.6 autoreconf cpe gmake iconv libtool perl5 tar:bzip2
 USE_PERL5=	run
 USE_RC_SUBR=	apache25 htcacheclean
 GNU_CONFIGURE=	yes
@@ -66,7 +65,7 @@ LUA_CONFIGURE_ENV=		LUA_CFLAGS="-I${LUA_INCDIR}" \
 				LUA_LIBS="-L${LUA_LIBDIR} -llua-${LUA_VER}"
 LUA_CONFIGURE_WITH=		lua=${PREFIX}
 LUA_USES=			lua
-MD_CONFIGURE_WITH=		jansson=${LOCALBASE}
+MD_CONFIGURE_WITH=		jansson=${LOCALBASE} curl=${LOCALBASE}
 MD_LIB_DEPENDS=			libcurl.so:ftp/curl \
 				libjansson.so:devel/jansson
 .for mod in event motorz prefork simple worker
@@ -130,9 +129,9 @@ MAKE_ENV+=	EXPR_COMPAT=yes \
 .include <bsd.port.pre.mk>
 .include "./Makefile.modules"
 
-.if ${OPSYS} == FreeBSD && ${OSVERSION} < 1100085 &&\
-	${PORT_OPTIONS:MHTTP2} && ${OPENSSLBASE} == /usr
-SUB_FILES+=    pkg-message
+.if ${OPSYS} == FreeBSD && ${OSVERSION} < 1100085 && ${OPENSSLBASE} == /usr && \
+	(${PORT_OPTION:MSSL} || ${PORT_OPTION:MHTTP2})
+IGNORE=	requires OpenSSL from ports on 10.x
 .endif
 
 post-extract:

@@ -1,5 +1,7 @@
 bin/a2md
 bin/ab
+bin/apxs
+bin/dbmmanage
 bin/firehose
 bin/htdbm
 bin/htdigest
@@ -251,13 +253,9 @@ man/man8/httpd.8.gz
 man/man8/rotatelogs.8.gz
 man/man8/suexec.8.gz
 sbin/apachectl
-@comment sbin/apxs
-bin/apxs
 %%FORENSIC%%sbin/check_forensic
 sbin/checkgid
-sbin/ctlogconfig
-@comment sbin/dbmmanage
-bin/dbmmanage
+%%SSL_CT%%sbin/ctlogconfig
 sbin/envvars
 sbin/envvars-std
 sbin/fcgistarter

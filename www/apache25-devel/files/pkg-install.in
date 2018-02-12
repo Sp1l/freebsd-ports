@@ -4,8 +4,8 @@
 #
 
 # Note:
-# We have to use grep or wc after awk, else
-# there is no usable ret value that can be
+# We have to use grep or wc after awk, otherwise
+# there is no usable return value that can be
 # used for further processing
 
 HTTPD_CONF="%%ETCDIR%%/httpd.conf"
