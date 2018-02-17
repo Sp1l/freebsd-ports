@@ -1,3 +1,3 @@
-TIMESTAMP = 1510556680
-SHA256 (openssl-openssl-1.1.1.a20171113-b741fcd_GH0.tar.gz) = 391a91e3f393d32edd8b5970b095a8e4ded864d97a6a9551566fae3954e8d61d
-SIZE (openssl-openssl-1.1.1.a20171113-b741fcd_GH0.tar.gz) = 10581966
+TIMESTAMP = 1518545771
+SHA256 (openssl-1.1.1-pre1.tar.gz) = dd291d0a81d77219d40b21b9caf4713daaf43416fe8d6eae0b96df39b8b17e6d
+SIZE (openssl-1.1.1-pre1.tar.gz) = 6406872

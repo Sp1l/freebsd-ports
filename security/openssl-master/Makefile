@@ -1,10 +1,12 @@
-# Created by: Dirk Froemberg <dirk@FreeBSD.org>
+ Created by: Dirk Froemberg <dirk@FreeBSD.org>
 # $FreeBSD: head/security/openssl-devel/Makefile 453383 2017-11-02 22:00:58Z brnrd $
 
 PORTNAME=	openssl
-PORTVERSION=	1.1.1.a20171113
+DISTVERSION=	1.1.1-pre1
 CATEGORIES=	security devel
-PKGNAMESUFFIX=	-masster
+MASTER_SITES=   https://www.openssl.org/source/ \
+		ftp://ftp.cert.dfn.de/pub/tools/net/openssl/source/
+PKGNAMESUFFIX=	-master
 
 MAINTAINER=	brnrd@FreeBSD.org
 COMMENT=	SSL and crypto library (1.1.1) unstable
@@ -17,22 +19,19 @@ CONFLICTS_INSTALL=	libressl-[0-9]* \
 			openssl-[0-9]* \
 			openssl-devel-[0-9]*
 
-USE_GITHUB=	yes
-GH_TAGNAME=	b741fcd
-
 HAS_CONFIGURE=	yes
 CONFIGURE_SCRIPT=	config
 CONFIGURE_ENV=	PERL="${PERL}"
 CONFIGURE_ARGS=	--openssldir=${OPENSSLDIR}
 
 OPTIONS_GROUP=	CIPHERS HASHES OPTIMIZE PROTOCOLS
-OPTIONS_GROUP_CIPHERS=	IDEA JPAKE RC2 RC4 RC5
+OPTIONS_GROUP_CIPHERS=	DES IDEA JPAKE RC2 RC4 RC5
 OPTIONS_GROUP_HASHES=	MD2 MD4 MDC2 RMD160
 OPTIONS_GROUP_OPTIMIZE=	ASM SSE2 THREADS
 OPTIONS_DEFINE_i386=	I386
 OPTIONS_GROUP_PROTOCOLS=	NEXTPROTONEG SCTP SSL3 TLS1 TLS1_1 TLS1_2 TLS1_3
 
-OPTIONS_DEFINE=	ASYNC MAN3 RFC3779 SHARED ZLIB
+OPTIONS_DEFINE=	ASYNC CT MAN3 RFC3779 SHARED ZLIB
 
 .if ${MACHINE_ARCH} == "amd64"
 OPTIONS_GROUP_OPTIMIZE+=	EC
@@ -41,11 +40,14 @@ OPTIONS_DEFAULT+=		EC
 OPTIONS_GROUP_OPTIMIZE+=	EC
 OPTIONS_DEFAULT+=		EC
 .endif
-OPTIONS_DEFAULT=	ASM ASYNC MAN3 MD4 RC2 RC4 RMD160 SCTP SHARED SSE2 THREADS TLS1 TLS1_1 TLS1_2 TLS1_3
+OPTIONS_DEFAULT=	ASM ASYNC CT MAN3 MD4 RC2 RC4 RMD160 SCTP SHARED \
+			SSE2 THREADS TLS1 TLS1_1 TLS1_2 TLS1_3
 
 ASM_DESC=	Assembler code
 ASYNC_DESC=	Asynchronous mode
 CIPHERS_DESC=	Cipher Suite Support
+CT_DESC=	Certificate Transparency Support
+DES_DESC=	Data Encryption Standard Support
 EC_DESC=	Optimize NIST elliptic curves
 HASHES_DESC=	Hash Function Support
 I386_DESC=	i386 (instead of i486+)
@@ -83,18 +85,19 @@ MAKE_ENV+=	LIBRPATH="${PREFIX}/lib" GREP_OPTIONS=
 TEST_TARGET=	test
 
 # Upstream default disabled options
-.for _option in md2 rc5 sctp ssl3 tls1_3 zlib
+.for _option in des md2 rc5 sctp ssl3 tls1_3 zlib
 ${_option:tu}_CONFIGURE_ON=	enable-${_option}
 .endfor
 
 # Upstream default enabled options
-.for _option in asm async idea md4 mdc2 md_ghost94 nextprotoneg rfc3779 \
+.for _option in asm async ct idea md4 mdc2 md_ghost94 nextprotoneg rfc3779 \
 	rmd160 sse2 threads tls1 tls1_1 tls1_2 zlib
 ${_option:tu}_CONFIGURE_OFF=	no-${_option}
 .endfor
 
 EC_CONFIGURE_ON=	enable-ec_nistp_64_gcc_128
 I386_CONFIGURE_ON=	386
+MAN3_EXTRA_PATCHES_OFF=	${FILESDIR}/extra-patch-util_process__docs.pl
 SHARED_MAKE_ENV=	SHLIBVER=${OPENSSL_SHLIBVER}
 SHARED_PLIST_SUB=	SHLIBVER=${OPENSSL_SHLIBVER}
 SHARED_USE=		ldconfig=yes
@@ -121,10 +124,6 @@ post-patch:
 		-e 's| install_html_docs$$||' \
 		-e 's|$$(LIBDIR)/pkgconfig|libdata/pkgconfig|g' \
 		${WRKSRC}/Configurations/unix-Makefile.tmpl
-
-post-patch-MAN3-off:
-	${GREP} -L openssl_manual_section ${WRKSRC}/doc/crypto/*.pod | ${XARGS} ${RM}
-	${GREP} -L openssl_manual_section ${WRKSRC}/doc/ssl/*.pod | ${XARGS} ${RM}
 
 post-configure:
 	${REINPLACE_CMD} \
