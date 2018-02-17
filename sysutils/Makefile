@@ -400,6 +400,7 @@
     SUBDIR += geomWatch
     SUBDIR += getdelta
     SUBDIR += geteltorito
+    SUBDIR += getssl
     SUBDIR += gigolo
     SUBDIR += gkfreq
     SUBDIR += gkleds2
@@ -535,7 +536,7 @@
     SUBDIR += kldfind
     SUBDIR += kldpatch
     SUBDIR += knutclient-kde4
-    SUBDIR += krename-kde4
+    SUBDIR += krename
     SUBDIR += kshutdown-kde4
     SUBDIR += ksysguardd
     SUBDIR += ksystemlog
@@ -575,6 +576,7 @@
     SUBDIR += lmmon
     SUBDIR += lmon
     SUBDIR += lnav
+    SUBDIR += lockfile-progs
     SUBDIR += log_analysis
     SUBDIR += logrotate
     SUBDIR += logstalgia

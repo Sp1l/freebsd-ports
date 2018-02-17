@@ -14,8 +14,6 @@ COMMENT=	Interpreted object-oriented programming language
 
 LICENSE=	PSFL
 
-BROKEN_SSL=	openssl-devel
-
 USES=		cpe ncurses pathfix pkgconfig readline:port shebangfix ssl tar:xz
 PATHFIX_MAKEFILEIN=	Makefile.pre.in
 USE_LDCONFIG=	yes
@@ -91,7 +89,7 @@ PLIST_SUB+=	X86_ONLY=""
 PLIST_SUB+=	X86_ONLY="@comment "
 .endif
 
-.if ${ARCH} == aarch64 || ${ARCH} == amd64 || ${ARCH} == ia64 || ${ARCH} == sparc64 || ${ARCH} == powerpc64 || ${ARCH} == mips64
+.if ${ARCH} == aarch64 || ${ARCH} == amd64 || ${ARCH} == mips64 || ${ARCH} == powerpc64 || ${ARCH} == sparc64
 PLIST_SUB+=	32BIT_ONLY="@comment "
 .else
 PLIST_SUB+=	32BIT_ONLY=""
@@ -116,11 +114,11 @@ post-patch:
 # readline shared library is present on base before FreeBSD 11 - r268461
 # force setup.py ignore base and use readline from ports
 .if ${OPSYS} == FreeBSD && ${OSVERSION} < 1100000
-	${REINPLACE_CMD} -e \
+	@${REINPLACE_CMD} -e \
 		"s|lib_dirs,\ \'readline\'|[\'${LOCALBASE}/lib\',\ \'.\'],\ \'readline\'|" \
 		${WRKSRC}/setup.py
 .endif
-	${REINPLACE_CMD} -e 's|/usr/local/bin/python|${python_CMD}|' \
+	@${REINPLACE_CMD} -e 's|/usr/local/bin/python|${python_CMD}|' \
 		${WRKSRC}/Lib/cgi.py
 	@${REINPLACE_CMD} -e \
 		's,/usr/doc/python-docs-,${PREFIX}/share/doc/python,g' \
