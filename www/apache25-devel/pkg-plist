@@ -1,4 +1,3 @@
-bin/a2md
 bin/ab
 bin/apxs
 bin/dbmmanage
@@ -247,6 +246,7 @@ man/man1/htpasswd.1.gz
 man/man1/httxt2dbm.1.gz
 man/man1/logresolve.1.gz
 man/man8/apachectl.8.gz
+man/man8/ctlogconfig.8.gz
 man/man8/fcgistarter.8.gz
 man/man8/htcacheclean.8.gz
 man/man8/httpd.8.gz
