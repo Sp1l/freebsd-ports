@@ -157,6 +157,10 @@ libexec/apache24/mod_log_config.so
 %%LOGIO%%libexec/apache24/mod_logio.so
 %%LUA%%libexec/apache24/mod_lua.so
 %%MACRO%%libexec/apache24/mod_macro.so
+<<<<<<< HEAD
+=======
+%%MD%%libexec/apache24/mod_md.so
+>>>>>>> fbsd/master
 %%MIME%%libexec/apache24/mod_mime.so
 %%MIME_MAGIC%%libexec/apache24/mod_mime_magic.so
 %%MPM_SHARED%%libexec/apache24/mod_mpm_event.so
@@ -180,6 +184,10 @@ libexec/apache24/mod_log_config.so
 %%PROXY_HTTP%%libexec/apache24/mod_proxy_http.so
 %%PROXY_HTTP2%%libexec/apache24/mod_proxy_http2.so
 %%PROXY_SCGI%%libexec/apache24/mod_proxy_scgi.so
+<<<<<<< HEAD
+=======
+%%PROXY_UWSGI%%libexec/apache24/mod_proxy_uwsgi.so
+>>>>>>> fbsd/master
 %%PROXY_WSTUNNEL%%libexec/apache24/mod_proxy_wstunnel.so
 %%RATELIMIT%%libexec/apache24/mod_ratelimit.so
 %%REFLECTOR%%libexec/apache24/mod_reflector.so
@@ -251,6 +259,8 @@ sbin/split-logfile
 %%DATADIR%%/misc/index.html
 @postexec [ -f %D/%%WWWDIR%%/data/index.html ] || cp %D/%%DATADIR%%/misc/index.html %D/%%WWWDIR%%/data/index.html
 @(,,0400) %%WWWDIR%%/cgi-bin/printenv
+@comment %%WWWDIR%%/cgi-bin/printenv.vbs 
+@comment %%WWWDIR%%/cgi-bin/printenv.wsf
 @(,,0400) %%WWWDIR%%/cgi-bin/test-cgi
 %%WWWDIR%%/error/HTTP_BAD_GATEWAY.html.var
 %%WWWDIR%%/error/HTTP_BAD_REQUEST.html.var

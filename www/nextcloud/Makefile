@@ -30,6 +30,7 @@ OPTIONS_MULTI=	DB
 OPTIONS_MULTI_DB=	MYSQL PGSQL SQLITE
 OPTIONS_DEFAULT=	EXIF LDAP MYSQL SMB SSL
 
+DB_DESC=	Database backend(s)
 EXIF_DESC=	Image rotation support
 
 EXIF_USE=	PHP=exif
@@ -39,7 +40,7 @@ MYSQL_USE=	PHP=pdo_mysql
 PGSQL_USES=	pgsql
 PGSQL_USE=	PHP=pdo_pgsql,pgsql
 SQLITE_USE=	PHP=pdo_sqlite,sqlite3
-SMB_RUN_DEPENDS=	pecl-smbclient>=0.8.0:net/pecl-smbclient
+SMB_RUN_DEPENDS=	${PECL_PKGNAMEPREFIX}smbclient>=0.8.0:net/pecl-smbclient@${PHP_FLAVOR}
 SSL_USE=	PHP=openssl
 
 post-patch:

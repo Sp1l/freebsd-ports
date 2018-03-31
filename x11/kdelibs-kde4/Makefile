@@ -3,7 +3,7 @@
 
 PORTNAME=	kdelibs
 PORTVERSION=	${KDE4_KDELIBS_VERSION}
-PORTREVISION=	9
+PORTREVISION=	1
 CATEGORIES=	x11 kde kde-applications
 PKGNAMESUFFIX=	-kde4
 
@@ -19,7 +19,7 @@ LIB_DEPENDS=	libImath-2_2.so:graphics/ilmbase \
 		libhal.so:sysutils/hal \
 		libqca.so:devel/qca \
 		libpolkit-qt-core-1.so:sysutils/polkit-qt \
-		libdbusmenu-qt.so:devel/libdbusmenu-qt \
+		libdbusmenu-qt.so:devel/libdbusmenu-qt@qt4 \
 		libstreams.so:deskutils/libstreams
 
 BUILD_DEPENDS=	docbook-xml>0:textproc/docbook-xml \
@@ -29,6 +29,9 @@ RUN_DEPENDS=	${LOCALBASE}/share/icons/hicolor/index.theme:misc/hicolor-icon-them
 		xauth:x11/xauth \
 		docbook-xml>0:textproc/docbook-xml \
 		${LOCALBASE}/share/xsl/docbook/html/docbook.xsl:textproc/docbook-xsl
+
+# kdelibs's last release was as part of KDE Applications 17.08.3
+KDE_APPLICATIONS_VERSION=	17.08.3
 
 USES=		cmake:outsource fam gettext grantlee:4 jpeg kde:4 perl5 \
 		shared-mime-info shebangfix tar:xz ssl

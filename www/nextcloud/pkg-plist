@@ -4044,8 +4044,6 @@
 %%WWWDIR%%/3rdparty/symfony/translation/composer.json
 %%WWWDIR%%/3rdparty/symfony/translation/phpunit.xml.dist
 %%WWWDIR%%/AUTHORS
-@owner %%NEXTCLOUD_USERNAME%%
-@group %%NEXTCLOUD_GROUPNAME%%
 %%WWWDIR%%/apps/activity/appinfo/app.php
 %%WWWDIR%%/apps/activity/appinfo/info.xml
 %%WWWDIR%%/apps/activity/appinfo/routes.php
@@ -10731,7 +10729,9 @@
 %%WWWDIR%%/apps/workflowengine/lib/Manager.php
 %%WWWDIR%%/apps/workflowengine/lib/Settings/Section.php
 %%WWWDIR%%/apps/workflowengine/templates/admin.php
+@group %%NEXTCLOUD_GROUPNAME%%
 %%WWWDIR%%/config/.htaccess
+@owner %%NEXTCLOUD_USERNAME%%
 %%WWWDIR%%/config/config.sample.php
 @comment %%WWWDIR%%/config/config.sample.php.bak
 @owner
@@ -13195,8 +13195,6 @@
 %%WWWDIR%%/settings/tests/js/users/deleteHandlerSpec.js
 %%WWWDIR%%/settings/users.php
 %%WWWDIR%%/status.php
-@owner %%NEXTCLOUD_USERNAME%%
-@group %%NEXTCLOUD_GROUPNAME%%
 %%WWWDIR%%/themes/README
 %%WWWDIR%%/themes/example/core/css/server.css
 %%WWWDIR%%/themes/example/core/img/favicon-touch.png
@@ -13211,10 +13209,8 @@
 %%WWWDIR%%/themes/example/core/img/logo.svg
 %%WWWDIR%%/themes/example/defaults.php
 %%WWWDIR%%/updater/index.php
-@owner
-@group
 %%WWWDIR%%/version.php
 @dir %%WWWDIR%%/apps/gallery/documentation/wiki
-@dir(%%NEXTCLOUD_USERNAME%%,%%NEXTCLOUD_GROUPNAME%%,) %%WWWDIR%%/apps
+@dir %%WWWDIR%%/apps
 @dir(%%NEXTCLOUD_USERNAME%%,%%NEXTCLOUD_GROUPNAME%%,) %%WWWDIR%%/config
 @dir(%%NEXTCLOUD_USERNAME%%,%%NEXTCLOUD_GROUPNAME%%,) %%WWWDIR%%/data

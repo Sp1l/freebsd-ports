@@ -46,6 +46,7 @@
     SUBDIR += cmucl-extra
     SUBDIR += cocor
     SUBDIR += cparser
+    SUBDIR += crystal
     SUBDIR += csharp-mode.el
     SUBDIR += cython
     SUBDIR += diveintopython
@@ -149,7 +150,7 @@
     SUBDIR += jython
     SUBDIR += kawa
     SUBDIR += kf5-kross
-    SUBDIR += kturtle
+    SUBDIR += kturtle-kde4
     SUBDIR += lafontaine
     SUBDIR += lci
     SUBDIR += ldc
@@ -181,6 +182,7 @@
     SUBDIR += mosh
     SUBDIR += mosml
     SUBDIR += mtasc
+    SUBDIR += mujs
     SUBDIR += munger
     SUBDIR += myrddin
     SUBDIR += nawk
@@ -263,6 +265,7 @@
     SUBDIR += picoc
     SUBDIR += pocl
     SUBDIR += polyml
+    SUBDIR += ponyc
     SUBDIR += ptoc
     SUBDIR += pure
     SUBDIR += py-clojure_py
@@ -329,6 +332,7 @@
     SUBDIR += smlnj
     SUBDIR += snobol4
     SUBDIR += solidity
+    SUBDIR += spec.alpha
     SUBDIR += spidermonkey17
     SUBDIR += spidermonkey170
     SUBDIR += spidermonkey185
@@ -360,7 +364,6 @@
     SUBDIR += v8-devel
     SUBDIR += vala
     SUBDIR += visualworks
-    SUBDIR += x10
     SUBDIR += yabasic
     SUBDIR += yap
     SUBDIR += yap-devel
