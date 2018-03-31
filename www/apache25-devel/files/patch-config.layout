@@ -1,6 +1,6 @@
---- config.layout.orig	2012-04-13 07:21:46 UTC
+--- config.layout.orig	2018-03-30 15:43:58 UTC
 +++ config.layout
-@@ -257,17 +257,17 @@
+@@ -281,17 +281,17 @@
    bindir:        ${exec_prefix}/bin
    sbindir:       ${exec_prefix}/sbin
    libdir:        ${exec_prefix}/lib

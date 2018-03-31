@@ -1,7 +1,7 @@
 # $FreeBSD: head/www/apache24/Makefile 450116 2017-09-19 12:21:17Z zi $
 
 PORTNAME=	apache
-DISTVERSION=	2.5.0-alpha
+PORTVERSION=	2.5.1.20180330
 MASTER_SITES=	https://dist.apache.org/repos/dist/dev/httpd/
 CATEGORIES=	www ipv6
 DISTNAME=	httpd-${DISTVERSION}
@@ -38,6 +38,10 @@ GROUPS=		www
 
 WITH_HTTP_PORT?=	80
 WITH_SSL_PORT?=		443
+
+USE_GITHUB=	yes
+GH_PROJECT=	httpd
+GH_TAGNAME=	02dc1ff
 
 .if !defined(WITH_DEBUG)
 #EXTRA_PATCHES+=	${FILESDIR}/extra-patch-server_buildmark.c
@@ -92,7 +96,9 @@ XML2ENC_CONFIGURE_WITH=		${PROXY_HTML_CONFIGURE_WITH}
 ${mod}_VARS=			with-devmods=yes
 .endfor
 
+ETCDIR=			${PREFIX}/etc/${PORTNAME}25
 ETC_SUBDIRS=		Includes envvars.d extra modules.d
+DATADIR=		${PREFIX}/share/${PORTNAME}25
 
 APR_CONFIG?=		${LOCALBASE}/bin/apr-1-config
 APU_CONFIG?=		${LOCALBASE}/bin/apu-1-config
@@ -145,13 +151,9 @@ post-patch:
 		${WRKSRC}/include/httpd.h
 	${REINPLACE_CMD} -e 's|perlbin=.*|perlbin=${PERL}|' \
 		${WRKSRC}/configure.in
-	${REINPLACE_CMD} -e 's|/original\(.*\)|\1.sample|' ${WRKSRC}/httpd.spec
 	${INSTALL_DATA} ${WRKSRC}/NOTICE ${WRKSRC}/docs/manual
 
 pre-configure::
-	@${ECHO_MSG}	""
-	@${ECHO_MSG}	"  You can check your modules configuration by using make show-modules"
-	@${ECHO_MSG}	""
 # silence autotools
 	-${MV} -v ${WRKSRC}/configure.in ${WRKSRC}/configure.ac
 
@@ -164,6 +166,7 @@ post-configure:
 	${REINPLACE_CMD} -e "s,%%PREFIX%%,${PREFIX}," ${WRKSRC}/support/envvars-std
 
 post-install:
+	${MV} ${STAGEDIR}${WWWDIR}25 ${STAGEDIR}${WWWDIR}
 	@${RM} -rv ${STAGEDIR}/${WWWDIR}/cgi-bin/printenv.vbs \
 		${STAGEDIR}/${WWWDIR}/cgi-bin/printenv.wsf \
 		${STAGEDIR}${DOCSDIR}/style/lang ${STAGEDIR}${DOCSDIR}/style/xsl
