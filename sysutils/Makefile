@@ -83,6 +83,7 @@
     SUBDIR += bacula9-docs
     SUBDIR += bacula9-server
     SUBDIR += baloo-kde4
+    SUBDIR += baloo-widgets
     SUBDIR += baloo-widgets-kde4
     SUBDIR += bamf
     SUBDIR += bareos-bat
@@ -141,14 +142,15 @@
     SUBDIR += cdrtools
     SUBDIR += cdrtools-devel
     SUBDIR += cfengine
+    SUBDIR += cfengine-devel
     SUBDIR += cfengine-masterfiles
+    SUBDIR += cfengine-masterfiles-devel
     SUBDIR += cfengine-masterfiles310
     SUBDIR += cfengine-masterfiles311
     SUBDIR += cfengine-masterfiles36
     SUBDIR += cfengine-masterfiles37
     SUBDIR += cfengine-masterfiles38
     SUBDIR += cfengine-masterfiles39
-    SUBDIR += cfengine-masterfiles-devel
     SUBDIR += cfengine22
     SUBDIR += cfengine310
     SUBDIR += cfengine311
@@ -160,7 +162,6 @@
     SUBDIR += cfengine37
     SUBDIR += cfengine38
     SUBDIR += cfengine39
-    SUBDIR += cfengine-devel
     SUBDIR += chgrep
     SUBDIR += chyves
     SUBDIR += cinnamon-control-center
@@ -322,6 +323,7 @@
     SUBDIR += fileprune
     SUBDIR += fileschanged
     SUBDIR += filetype
+    SUBDIR += filevercmp
     SUBDIR += filewatcherd
     SUBDIR += finfo
     SUBDIR += firstboot-freebsd-update
@@ -458,6 +460,7 @@
     SUBDIR += hal-info
     SUBDIR += hardlink
     SUBDIR += hare
+    SUBDIR += hared
     SUBDIR += hatop
     SUBDIR += hdrecover
     SUBDIR += healthd
@@ -496,6 +499,7 @@
     SUBDIR += installwatch
     SUBDIR += intel-nvmupdate
     SUBDIR += intel-pcm
+    SUBDIR += intel-pcm-devel
     SUBDIR += intel-qcu
     SUBDIR += iocage
     SUBDIR += iocell
@@ -531,18 +535,25 @@
     SUBDIR += jtopen
     SUBDIR += jvmtop
     SUBDIR += jx
+    SUBDIR += k3b
     SUBDIR += k3b-kde4
     SUBDIR += k8temp
     SUBDIR += kcm-polkit-kde
+    SUBDIR += kcron
     SUBDIR += kcron-kde4
     SUBDIR += kdeadmin-kde4
+    SUBDIR += kdebugsettings
+    SUBDIR += kdf
     SUBDIR += kdf-kde4
+    SUBDIR += kdialog
     SUBDIR += kdirstat
     SUBDIR += keyboard-daemon
     SUBDIR += kf5-baloo
     SUBDIR += kf5-kwallet
     SUBDIR += kfilemetadata-kde4
+    SUBDIR += kfloppy
     SUBDIR += kfloppy-kde4
+    SUBDIR += khelpcenter
     SUBDIR += kiconvtool
     SUBDIR += kldfind
     SUBDIR += kldpatch
@@ -550,6 +561,7 @@
     SUBDIR += krename
     SUBDIR += kshutdown-kde4
     SUBDIR += ksysguardd-kde4
+    SUBDIR += ksystemlog
     SUBDIR += ksystemlog-kde4
     SUBDIR += kuser-kde4
     SUBDIR += lava
@@ -648,9 +660,9 @@
     SUBDIR += megarc
     SUBDIR += memdump
     SUBDIR += memfetch
-    SUBDIR += memtest
     SUBDIR += memtest86
     SUBDIR += memtest86+
+    SUBDIR += memtester
     SUBDIR += metalog
     SUBDIR += mfid
     SUBDIR += mgeupsd
@@ -880,7 +892,6 @@
     SUBDIR += polkit-gnome
     SUBDIR += polkit-kde
     SUBDIR += polkit-qt
-    SUBDIR += polkit-qt5
     SUBDIR += pot
     SUBDIR += powerdxx
     SUBDIR += powerman
@@ -1094,6 +1105,7 @@
     SUBDIR += runit
     SUBDIR += runit-faster
     SUBDIR += runwhen
+    SUBDIR += s-tui
     SUBDIR += s6
     SUBDIR += s6-rc
     SUBDIR += safe-rm
@@ -1133,6 +1145,7 @@
     SUBDIR += shmcat
     SUBDIR += showbeastie
     SUBDIR += siegfried
+    SUBDIR += signon-kwallet-extension
     SUBDIR += signon-plugin-oauth2
     SUBDIR += signon-qt5
     SUBDIR += signon-ui
