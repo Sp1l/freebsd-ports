@@ -24,6 +24,7 @@
     SUBDIR += R-cran-udunits2
     SUBDIR += afni
     SUBDIR += aircraft-datcom
+    SUBDIR += antioch
     SUBDIR += avogadro
     SUBDIR += bddsolve
     SUBDIR += bft
@@ -46,6 +47,7 @@
     SUBDIR += dcl
     SUBDIR += devisor
     SUBDIR += dkh
+    SUBDIR += dlib-cpp
     SUBDIR += dlpoly-classic
     SUBDIR += ecs
     SUBDIR += epte
@@ -107,6 +109,7 @@
     SUBDIR += meep
     SUBDIR += mei
     SUBDIR += metaf2xml
+    SUBDIR += metaphysicl
     SUBDIR += minc2
     SUBDIR += mol2ps
     SUBDIR += mpb
@@ -164,6 +167,7 @@
     SUBDIR += py-OpenFermion
     SUBDIR += py-cdo
     SUBDIR += py-coards
+    SUBDIR += py-dlib
     SUBDIR += py-h5py
     SUBDIR += py-hcluster
     SUBDIR += py-mdp

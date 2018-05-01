@@ -5,6 +5,7 @@
 
     SUBDIR += R-cran-DBI
     SUBDIR += R-cran-RMySQL
+    SUBDIR += R-cran-RPostgreSQL
     SUBDIR += R-cran-RSQLite
     SUBDIR += R-cran-RSQLite.extfuns
     SUBDIR += R-cran-sqldf
@@ -561,6 +562,7 @@
     SUBDIR += pecl-mongodb
     SUBDIR += pecl-pdo_user
     SUBDIR += pecl-redis
+    SUBDIR += pecl-redis3
     SUBDIR += pecl-rrd
     SUBDIR += pecl-rrd1
     SUBDIR += pecl-tokyo_tyrant
@@ -600,6 +602,7 @@
     SUBDIR += pgpool-II-33
     SUBDIR += pgpool-II-35
     SUBDIR += pgpool-II-36
+    SUBDIR += pgpool-II-37
     SUBDIR += pgreplay
     SUBDIR += pgroonga
     SUBDIR += pgrouting
@@ -888,6 +891,7 @@
     SUBDIR += redigo
     SUBDIR += redis
     SUBDIR += redis-devel
+    SUBDIR += redisdesktopmanager
     SUBDIR += retcl
     SUBDIR += riak
     SUBDIR += riak2

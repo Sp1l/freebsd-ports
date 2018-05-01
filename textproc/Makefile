@@ -602,6 +602,7 @@
     SUBDIR += p5-HTML-SuperForm
     SUBDIR += p5-HTML-TagFilter
     SUBDIR += p5-HTML-Tidy
+    SUBDIR += p5-HTML-Tidy5
     SUBDIR += p5-HTML-Tiny
     SUBDIR += p5-HTML-Truncate
     SUBDIR += p5-Hailo
@@ -1445,6 +1446,7 @@
     SUBDIR += redland-bindings
     SUBDIR += refdb
     SUBDIR += reflex
+    SUBDIR += regex2dfa
     SUBDIR += replaceit
     SUBDIR += resume
     SUBDIR += resume-extensions
@@ -1508,7 +1510,6 @@
     SUBDIR += rubygem-emot
     SUBDIR += rubygem-escape_utils
     SUBDIR += rubygem-escape_utils11
-    SUBDIR += rubygem-escape_utils-rails4
     SUBDIR += rubygem-ezamar
     SUBDIR += rubygem-fast_xs
     SUBDIR += rubygem-ferret

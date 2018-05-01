@@ -76,6 +76,7 @@
     SUBDIR += chems
     SUBDIR += cherokee
     SUBDIR += choqok
+    SUBDIR += choqok-kde4
     SUBDIR += chpasswd
     SUBDIR += chromium
     SUBDIR += ckeditor
@@ -887,6 +888,7 @@
     SUBDIR += p5-HTML-FormFu
     SUBDIR += p5-HTML-FormFu-Imager
     SUBDIR += p5-HTML-FormFu-Model-DBIC
+    SUBDIR += p5-HTML-FormFu-MultiForm
     SUBDIR += p5-HTML-FormHandler
     SUBDIR += p5-HTML-FromANSI
     SUBDIR += p5-HTML-FromText
@@ -1469,6 +1471,7 @@
     SUBDIR += pivotx
     SUBDIR += piwigo
     SUBDIR += planet
+    SUBDIR += plasma5-plasma-browser-integration
     SUBDIR += plexwatchweb
     SUBDIR += plone
     SUBDIR += plugger
@@ -1613,6 +1616,7 @@
     SUBDIR += py-django-threaded-multihost
     SUBDIR += py-django-timezone-field
     SUBDIR += py-django-tinymce
+    SUBDIR += py-django-treebeard
     SUBDIR += py-django-voting
     SUBDIR += py-django111
     SUBDIR += py-django18
@@ -1621,11 +1625,13 @@
     SUBDIR += py-django_openstack_auth
     SUBDIR += py-django_polymorphic
     SUBDIR += py-djangorestframework
+    SUBDIR += py-djangorestframework36
     SUBDIR += py-djangorestframework-csv
     SUBDIR += py-djangorestframework-filters
     SUBDIR += py-djangorestframework-xml
     SUBDIR += py-djangotoolbox
     SUBDIR += py-dojango
+    SUBDIR += py-drf-yasg
     SUBDIR += py-dtflickr
     SUBDIR += py-evernote
     SUBDIR += py-falcon
@@ -2391,6 +2397,7 @@
     SUBDIR += ufdbguard
     SUBDIR += unit
     SUBDIR += unit-go
+    SUBDIR += unit-perl
     SUBDIR += unit-php
     SUBDIR += usermanager
     SUBDIR += uwsgi
