@@ -76,7 +76,6 @@
     SUBDIR += hdf
     SUBDIR += hdf5
     SUBDIR += hdf5-18
-    SUBDIR += hs-bio
     SUBDIR += hypre
     SUBDIR += iboview
     SUBDIR += isaac-cfd
@@ -105,6 +104,7 @@
     SUBDIR += mcstas
     SUBDIR += mcstas-comps
     SUBDIR += mcxtrace
+    SUBDIR += mcxtrace-comps
     SUBDIR += medit
     SUBDIR += meep
     SUBDIR += mei
@@ -164,14 +164,18 @@
     SUBDIR += psychopy
     SUBDIR += pulseview
     SUBDIR += py-DendroPy
+    SUBDIR += py-MDAnalysis
+    SUBDIR += py-MDAnalysisTests
     SUBDIR += py-OpenFermion
     SUBDIR += py-cdo
     SUBDIR += py-coards
     SUBDIR += py-dlib
+    SUBDIR += py-gsd
     SUBDIR += py-h5py
     SUBDIR += py-hcluster
     SUBDIR += py-mdp
     SUBDIR += py-mlpy
+    SUBDIR += py-mmtf-python
     SUBDIR += py-netCDF4
     SUBDIR += py-obspy
     SUBDIR += py-openpiv

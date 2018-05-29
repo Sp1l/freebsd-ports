@@ -109,6 +109,7 @@
     SUBDIR += gcc7
     SUBDIR += gcc7-devel
     SUBDIR += gcc8-devel
+    SUBDIR += gcc9-devel
     SUBDIR += gforth
     SUBDIR += ghc
     SUBDIR += gjs
@@ -253,6 +254,7 @@
     SUBDIR += perl5.22
     SUBDIR += perl5.24
     SUBDIR += perl5.26
+    SUBDIR += perl5.28
     SUBDIR += petite-chez
     SUBDIR += pfe
     SUBDIR += phantomjs
@@ -343,6 +345,7 @@
     SUBDIR += spidermonkey185
     SUBDIR += spidermonkey24
     SUBDIR += spidermonkey38
+    SUBDIR += spidermonkey52
     SUBDIR += spl
     SUBDIR += squeak
     SUBDIR += squirrel

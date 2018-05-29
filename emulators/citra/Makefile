@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	citra
-PORTVERSION=	s20180427
+PORTVERSION=	s20180528
 PORTREVISION?=	0
 CATEGORIES=	emulators
 
@@ -17,22 +17,20 @@ LICENSE_FILE_GPLv2+ =	${WRKSRC}/license.txt
 LICENSE_FILE_MIT=	${WRKSRC}/externals/enet/LICENSE
 LICENSE_FILE_LGPL21+ =	${_LICENSE_STORE}/LGPL21 # soundtouch
 
-BUILD_DEPENDS=	boost-libs>=1.66:devel/boost-libs
+BROKEN_FreeBSD_10=	libc++ does not support C++17 features e.g., weak_from_this
 
-# backend_x64/hostloc.h:93:8: fatal error: no type named 'Reg64' in namespace 'Xbyak'
-ONLY_FOR_ARCHS=	amd64
-ONLY_FOR_ARCHS_REASON=	https://github.com/MerryMage/dynarmic/issues/35
+BUILD_DEPENDS=	boost-libs>=1.66:devel/boost-libs
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	citra-emu
-GH_TAGNAME=	55414c32
+GH_TAGNAME=	2772362f
 GH_TUPLE=	citra-emu:ext-libressl-portable:cbb1dca:libressl/externals/libressl \
-		citra-emu:ext-soundtouch:019d208:soundtouch/externals/soundtouch \
+		citra-emu:ext-soundtouch:a6e9119:soundtouch/externals/soundtouch \
 		MerryMage:dynarmic:d1d4705:dynarmic/externals/dynarmic \
 		benhoyt:inih:r40:inih/externals/inih/inih \
 		catchorg:Catch2:v2.1.1:catch/externals/catch \
 		fmtlib:fmt:4.0.0-510-g5859e58:fmt/externals/fmt \
-		herumi:xbyak:v5.53-1-gc5da377:xbyak/externals/xbyak \
+		herumi:xbyak:v5.64:xbyak/externals/xbyak \
 		lsalzman:enet:39a72ab:enet/externals/enet \
 		neobrain:nihstro:fd69de1:nihstro/externals/nihstro \
 		weidai11:cryptopp:CRYPTOPP_6_1_0:cryptopp/externals/cryptopp/cryptopp
@@ -43,6 +41,7 @@ EXTRA_PATCHES+=	${EXTRA_PATCHES_${OPSYS}_${OSREL:R}}
 EXTRA_PATCHES_FreeBSD_10=	${PATCHDIR}/extra-patch-c++14
 CXXFLAGS+=	-D_GLIBCXX_USE_C99 -D_GLIBCXX_USE_C99_MATH_TR1 \
 		-D_DECLARE_C99_LDBL_MATH # XXX ports/193528
+LDFLAGS+=	-Wl,--as-needed # Qt5Network
 
 OPTIONS_MULTI=	GUI
 OPTIONS_MULTI_GUI=	QT5 SDL
@@ -55,7 +54,7 @@ SDL_PLIST_FILES=bin/${PORTNAME} \
 		man/man6/${PORTNAME}.6.gz
 
 QT5_USES=	desktop-file-utils shared-mime-info
-QT5_USE=	QT5=qmake_build,buildtools_build,concurrent_build,core,gui,opengl,widgets
+QT5_USE=	QT5=qmake_build,buildtools_build,concurrent_build,core,gui,multimedia,opengl,widgets
 QT5_CMAKE_BOOL=	ENABLE_QT
 QT5_PLIST_FILES=bin/${PORTNAME}-qt \
 		"@comment bin/${PORTNAME}-room" \

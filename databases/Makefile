@@ -76,6 +76,7 @@
     SUBDIR += firebird25-server
     SUBDIR += flamerobin
     SUBDIR += fortytwo-bdb
+    SUBDIR += foundationdb
     SUBDIR += fpc-dblib
     SUBDIR += fpc-fpindexer
     SUBDIR += fpc-gdbm
@@ -891,6 +892,7 @@
     SUBDIR += redigo
     SUBDIR += redis
     SUBDIR += redis-devel
+    SUBDIR += redis_exporter
     SUBDIR += redisdesktopmanager
     SUBDIR += retcl
     SUBDIR += riak
@@ -997,7 +999,6 @@
     SUBDIR += rubygem-redis-namespace15
     SUBDIR += rubygem-redis3
     SUBDIR += rubygem-seed-fu
-    SUBDIR += rubygem-seed-fu236
     SUBDIR += rubygem-sqlite3
     SUBDIR += rubygem-sqlite3-ruby
     SUBDIR += rubygem-state_machines-activemodel

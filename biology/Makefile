@@ -19,7 +19,9 @@
     SUBDIR += cd-hit
     SUBDIR += cdbfasta
     SUBDIR += chemeq
+    SUBDIR += clustal-omega
     SUBDIR += clustalw
+    SUBDIR += clustalx
     SUBDIR += consed
     SUBDIR += crux
     SUBDIR += ddocent
@@ -42,6 +44,7 @@
     SUBDIR += grappa
     SUBDIR += hmmer
     SUBDIR += htslib
+    SUBDIR += hyphy
     SUBDIR += iolib
     SUBDIR += iqtree
     SUBDIR += jalview

@@ -8,6 +8,7 @@
     SUBDIR += R-cran-DT
     SUBDIR += R-cran-R2HTML
     SUBDIR += R-cran-XML
+    SUBDIR += R-cran-bibtex
     SUBDIR += R-cran-brew
     SUBDIR += R-cran-formatR
     SUBDIR += R-cran-highr
@@ -51,6 +52,7 @@
     SUBDIR += augeas
     SUBDIR += az-aspell
     SUBDIR += bar
+    SUBDIR += bat
     SUBDIR += bbe
     SUBDIR += be-aspell
     SUBDIR += bedic-data
@@ -70,6 +72,7 @@
     SUBDIR += bsdsort
     SUBDIR += btparse
     SUBDIR += c2html
+    SUBDIR += c2man
     SUBDIR += ca-aspell
     SUBDIR += catdoc
     SUBDIR += cdif
@@ -189,6 +192,7 @@
     SUBDIR += fa-aspell
     SUBDIR += fcitx-m17n
     SUBDIR += fcitx-qt5
+    SUBDIR += fcitx-table-other
     SUBDIR += fex
     SUBDIR += ffe
     SUBDIR += fi-aspell
@@ -258,6 +262,7 @@
     SUBDIR += hs-case-insensitive
     SUBDIR += hs-cassava
     SUBDIR += hs-cmark
+    SUBDIR += hs-cmark-gfm
     SUBDIR += hs-csv
     SUBDIR += hs-doctemplates
     SUBDIR += hs-double-conversion
@@ -278,7 +283,6 @@
     SUBDIR += hs-pandoc
     SUBDIR += hs-pandoc-citeproc
     SUBDIR += hs-pandoc-types
-    SUBDIR += hs-parsec
     SUBDIR += hs-polyparse
     SUBDIR += hs-pretty-show
     SUBDIR += hs-regex-applicative
@@ -292,6 +296,7 @@
     SUBDIR += hs-rfc5051
     SUBDIR += hs-scanner
     SUBDIR += hs-skylighting
+    SUBDIR += hs-skylighting-core
     SUBDIR += hs-stringsearch
     SUBDIR += hs-tagsoup
     SUBDIR += hs-tagstream-conduit
@@ -299,6 +304,7 @@
     SUBDIR += hs-uri
     SUBDIR += hs-uri-bytestring
     SUBDIR += hs-uri-bytestring-aeson
+    SUBDIR += hs-uri-encode
     SUBDIR += hs-xml
     SUBDIR += hs-xml-conduit
     SUBDIR += hs-xml-hamlet
@@ -333,6 +339,7 @@
     SUBDIR += ibus-qt
     SUBDIR += ibus-table
     SUBDIR += ibus-typing-booster
+    SUBDIR += ibus-uniemoji
     SUBDIR += icdiff
     SUBDIR += id-aspell
     SUBDIR += id-hyphen
@@ -797,7 +804,6 @@
     SUBDIR += p5-Sphinx-Config
     SUBDIR += p5-Sphinx-Manager
     SUBDIR += p5-Sphinx-Search
-    SUBDIR += p5-Spork
     SUBDIR += p5-Spreadsheet-ParseExcel
     SUBDIR += p5-Spreadsheet-Read
     SUBDIR += p5-Spreadsheet-ReadSXC
@@ -1278,6 +1284,8 @@
     SUBDIR += py-bibtexparser
     SUBDIR += py-bugzillatools
     SUBDIR += py-chardet
+    SUBDIR += py-citeproc-py
+    SUBDIR += py-citeproc-py-styles
     SUBDIR += py-cjkwrap
     SUBDIR += py-cloud_sptheme
     SUBDIR += py-colorclass
@@ -1287,10 +1295,12 @@
     SUBDIR += py-diff-match-patch
     SUBDIR += py-docutils
     SUBDIR += py-dsv
+    SUBDIR += py-duecredit
     SUBDIR += py-elasticsearch
     SUBDIR += py-elasticsearch-async
     SUBDIR += py-elasticsearch5
     SUBDIR += py-elasticsearch-curator
+    SUBDIR += py-elasticsearch-dsl
     SUBDIR += py-elasticsearch-dsl-py
     SUBDIR += py-elasticsearch2-dsl-py
     SUBDIR += py-elib.intl
@@ -1339,7 +1349,6 @@
     SUBDIR += py-pss
     SUBDIR += py-pyPEG2
     SUBDIR += py-pyctpp2
-    SUBDIR += py-pyelasticsearch
     SUBDIR += py-pyes
     SUBDIR += py-pygments
     SUBDIR += py-pygtail
@@ -1367,6 +1376,7 @@
     SUBDIR += py-rdflib
     SUBDIR += py-regex
     SUBDIR += py-reverend
+    SUBDIR += py-rnc2rng
     SUBDIR += py-rss2gen
     SUBDIR += py-rst2html5
     SUBDIR += py-rstyoutube
@@ -1396,6 +1406,7 @@
     SUBDIR += py-textfsm
     SUBDIR += py-texttable
     SUBDIR += py-tinycss
+    SUBDIR += py-toml
     SUBDIR += py-toronado
     SUBDIR += py-trans
     SUBDIR += py-transifex-client
@@ -1526,6 +1537,7 @@
     SUBDIR += rubygem-heredoc_unindent
     SUBDIR += rubygem-hikidoc
     SUBDIR += rubygem-html-pipeline
+    SUBDIR += rubygem-html-pipeline27
     SUBDIR += rubygem-html-pipeline-gitlab
     SUBDIR += rubygem-html-pipeline1
     SUBDIR += rubygem-html2text
@@ -1566,6 +1578,7 @@
     SUBDIR += rubygem-parslet
     SUBDIR += rubygem-phone
     SUBDIR += rubygem-pretty-xml
+    SUBDIR += rubygem-raabro
     SUBDIR += rubygem-rails-dom-testing
     SUBDIR += rubygem-rails-dom-testing-rails5
     SUBDIR += rubygem-rails-dom-testing-rails50

@@ -150,6 +150,7 @@ COMMANDS=	bugpoint \
 		llvm-split \
 		llvm-stress \
 		llvm-strings \
+		llvm-strip \
 		llvm-symbolizer \
 		llvm-tblgen \
 		macho-dump \
@@ -217,9 +218,11 @@ COMMANDS+=	c-index-test \
 		clang-import-test \
 		clang-offload-bundler \
 		clangd \
+		diagtool \
 		scan-build \
 		scan-view
 MAN1SRCS+=	clang.1 \
+		diagtool.1 \
 		scan-build.1
 CLANG_PATTERN=	(c-index-test|clang|scan-|Reporter.py|ScanView.py|scanview.css|sorttable.js|startfile.py|-analyzer)
 .endif
@@ -275,11 +278,6 @@ MAN1SRCS+=	bugpoint.1 dsymutil.1 llc.1 lli.1 llvm-ar.1 llvm-as.1 \
 
 .include <bsd.port.pre.mk>
 
-.if ${OPSYS} == FreeBSD && ${OSREL} == 10.3
-CFLAGS+=	-D_LIBCPP_TRIVIAL_PAIR_COPY_CTOR=1
-BROKEN=	Missing __cxa_thread_atexit
-.endif
-
 .if defined(WITH_DEBUG)
 CMAKE_BUILD_TYPE=	RelWithDebInfo
 STRIP=
@@ -310,6 +308,7 @@ _COMPILER_RT_LIBS= \
 	libclang_rt.msan_cxx-x86_64.a.syms \
 	libclang_rt.xray-basic-x86_64.a \
 	libclang_rt.xray-fdr-x86_64.a \
+	libclang_rt.xray-profiler-x86_64.a \
 	libclang_rt.xray-x86_64.a \
 	libclang_rt.profile-x86_64.a \
 	libclang_rt.safestack-x86_64.a \
